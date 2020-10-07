@@ -12,7 +12,7 @@ class Kilometrage extends Model
     }
     public function vehicule()
     {
-    return $this->hasMany('App\Vehicule');
+    return $this->belongsTo('App\Vehicule');
     }
     public function user()
     {

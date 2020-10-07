@@ -45,4 +45,7 @@ class User extends Authenticatable
     {
     return $this->hasMany('App\Alimentation_Cuve');
     }
+    public function unite(){
+        return $this->belongsTo('App\unite');
+    }
 }

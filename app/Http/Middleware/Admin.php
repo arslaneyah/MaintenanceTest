@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Admin
 {
@@ -15,14 +16,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+
         if (Auth::user()->role == "admin") {
             return $next($request);
         }
-        if (Auth::user()->role == "admin") {
-            return redirect()->route('admin');
-        }
+
     }
 }

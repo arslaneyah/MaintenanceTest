@@ -14,5 +14,8 @@ class Unite extends Model
     {
     return $this->BelongsTo('App\Wilaya');
     }
+    public function user(){
+        return $this->hasMany('App\User');
+    }
 
 }

@@ -16,7 +16,7 @@ class Vehicule extends Model
     }
     public function piece()
     {
-    
+
     return $this->hasMany('App\Piece');
     }
     public function lubrifiant()
@@ -24,13 +24,13 @@ class Vehicule extends Model
     return $this->hasMany('App\Lubrifiant');
     }
     public function unite()
-    {    
+    {
     return $this->belongsTo('App\Unite');
     }
 
     public function kilometrage()
     {
-    return $this->belongsTo('App\Kilometrage');
+    return $this->hasMany('App\Kilometrage');
     }
 
 }

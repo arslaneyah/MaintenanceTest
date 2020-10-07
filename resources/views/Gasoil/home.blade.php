@@ -52,10 +52,10 @@
                         @foreach ($gasoils as $item)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td>{{$item->vehicule->unite->name}}</td>
-                                <td>{{$item->vehicule->n_park}}</td>
-                                <td>{{$item->vehicule->matricule}}</td>
-                                <td>{{$item->vehicule->kilometrage->dernier_km}}</td>
+                                <td>{{$item->kilometrage->vehicule->unite->name}}</td>
+                                <td>{{$item->kilometrage->vehicule->n_park}}</td>
+                                <td>{{$item->kilometrage->vehicule->matricule}}</td>
+                                <td>{{$item->kilometrage->dernier_km}}</td>
                                 <td>{{$item->kilometrage->date}}</td>
                                 <td>{{$item->litres}}</td>
                                 <td>{{($item->litres)*($item->fournisseur->prix)}}</td>
