@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Marque;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarqueController extends Controller
 {
@@ -11,9 +13,14 @@ class MarqueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('Admin');
+    }
     public function index()
     {
-        //
+        $marques=Marque::all();
+        return view('Admin/vehicules/index_marques')->with('marques',$marques);
     }
 
     /**
@@ -23,7 +30,8 @@ class MarqueController extends Controller
      */
     public function create()
     {
-        //
+        return view('Admin/vehicules/create_marque');
+
     }
 
     /**
@@ -34,7 +42,12 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user=Auth::user();
+        $marque= new Marque();
+        $marque->nom=$request->input('nom');
+        $marque->user_id=$user->id ;
+        $marque->save();
+        return redirect('/Marque');
     }
 
     /**

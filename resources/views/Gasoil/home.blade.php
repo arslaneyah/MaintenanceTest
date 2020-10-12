@@ -4,6 +4,57 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{$gasoils->count()}}</h3>
+
+                        <p>Operations Gasoils</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{$gasoils->count('litres')}}</h3>
+
+                        <p>Litres Consommés</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fill-drip"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        @php
+                            $total=0 ;
+                        foreach ($gasoils as $item){
+                            $total=$total+ ($gasoils->litres)*($gasoils->fournisseur->prix);
+                        }
+
+                        @endphp
+                        <h3>{{$total}}</h3>
+
+                        <p>Prix Total</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 <div class="input-group">
                     <div class="input-group-prepend">

@@ -12,10 +12,13 @@ class Unite extends Model
     }
     public function wilaya()
     {
-    return $this->BelongsTo('App\Wilaya');
+    return $this->belongsTo('App\Wilaya');
     }
     public function user(){
         return $this->hasMany('App\User');
+    }
+    public function cuve(){
+        return $this->hasMany('App\Cuve');
     }
 
 }

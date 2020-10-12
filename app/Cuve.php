@@ -14,5 +14,9 @@ class Cuve extends Model
     {
     return $this->HasMany('App\Alimentation_Cuve');
     }
+    public function unite()
+    {
+        return $this->belongsTo('App\Unite');
+    }
 
 }

@@ -48,4 +48,14 @@ class User extends Authenticatable
     public function unite(){
         return $this->belongsTo('App\unite');
     }
+    public function marque()
+    {
+        return $this->belongsTo('App\Marque');
+    }
+    public function modele(){
+        return $this->belongsTo(App\Modele);
+    }
+    public function vehicule(){
+        return $this->belongsTo(App\Vehicule);
+    }
 }

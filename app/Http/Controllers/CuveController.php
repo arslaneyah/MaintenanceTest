@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cuve;
+use App\Unite;
 use Illuminate\Http\Request;
 
 class CuveController extends Controller
@@ -11,9 +13,14 @@ class CuveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('Admin');
+    }
     public function index()
     {
-        //
+        $cuves=Cuve::all();
+        return view('Admin/cuves/index')->with('cuves',$cuves);
     }
 
     /**
@@ -23,7 +30,9 @@ class CuveController extends Controller
      */
     public function create()
     {
-        //
+        $unites=Unite::all();
+        return view('Admin/cuves/create')->with('unites',$unites);
+
     }
 
     /**
@@ -34,7 +43,13 @@ class CuveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cuve=new Cuve();
+        $cuve->nom= $request->input('nom');
+        $cuve->capacite= $request->input('capacite');
+        $cuve->quantite_gasoil= $request->input('quantite');
+        $cuve->unite_id= $request->input('unite');
+        $cuve->save();
+        return redirect('/Cuve');
     }
 
     /**

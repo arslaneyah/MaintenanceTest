@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Unite;
+use App\Wilaya;
 use Illuminate\Http\Request;
 
 class UniteController extends Controller
@@ -11,9 +13,14 @@ class UniteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('Admin');
+    }
     public function index()
     {
-        //
+        $unites=Unite::all();
+        return view('Admin/unites/index')->with('unites',$unites);
     }
 
     /**
@@ -23,7 +30,8 @@ class UniteController extends Controller
      */
     public function create()
     {
-        //
+        $wilayas=Wilaya::all();
+        return view('Admin/unites/create')->with('wilayas',$wilayas);
     }
 
     /**
@@ -34,7 +42,12 @@ class UniteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $unite= new Unite();
+        $unite->id= $request->input('id');
+        $unite->name= $request->input('nom');
+        $unite->wilaya_id= $request->input('wilaya');
+        $unite->save();
+        return redirect('/Unite');
     }
 
     /**

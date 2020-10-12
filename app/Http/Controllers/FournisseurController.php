@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fournisseur;
 use Illuminate\Http\Request;
 
 class FournisseurController extends Controller
@@ -11,9 +12,14 @@ class FournisseurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('Admin');
+    }
     public function index()
     {
-        //
+        $fournisseurs=Fournisseur::all();
+        return view('admin/fournisseurs/index')->with('fournisseurs',$fournisseurs);
     }
 
     /**
@@ -23,7 +29,8 @@ class FournisseurController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/fournisseurs/create');
+
     }
 
     /**
@@ -34,7 +41,12 @@ class FournisseurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fournisseur=new Fournisseur();
+        $fournisseur->nom= $request->input('nom');
+        $fournisseur->prix= $request->input('prix');
+        $fournisseur->etat= $request->input('etat');
+        $fournisseur->save();
+        return redirect('/Fournisseur');
     }
 
     /**

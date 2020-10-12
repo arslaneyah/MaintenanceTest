@@ -21,10 +21,12 @@ class GasoilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
+    public function __construct()
+    {
 
-        $this->middleware('Admin',['except' => ['create','store']]);
+        $this->middleware('Writer', ['only' => ['create', 'store']]);
     }
+
     public function index()
     {
         try {
@@ -50,14 +52,15 @@ class GasoilController extends Controller
 
 
         $user = Auth::user();
-        /*   if($user->role="admin"){
-       $vehicules = Vehicule::where('unite_id',33)->get() ;
-       $cuves = Cuve::where('unite_id','like','33%')->get() ;
-}*/
-
-        $vehicules = Vehicule::All();
-        $cuves = Cuve::All();
+        if ($user->role == "agent") {
+            $unite = $user->unite_id;
+            $cuves = Cuve::where('unite_id', 'like', $unite . '%')->get();
+            $cuves = $cuves->except(99);
+        } else {
+            $cuves = Cuve::All();
+        }
         $fournisseur = Fournisseur::where('etat', 1)->get();
+        $vehicules = Vehicule::All();
         return view('Gasoil/create')->with('vehicules', $vehicules)->with('fournisseurs', $fournisseur)->with('cuves', $cuves);
 
     }
@@ -96,7 +99,7 @@ class GasoilController extends Controller
                         Alert::success('Operation Conclue', 'Succés');
 
                     } else {
-                        if ($request->input("km") < ($kilometrage)) {
+                        if ($request->input("km") < ($kilometrage->dernier_km)) {
                             Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
 
                         } else {

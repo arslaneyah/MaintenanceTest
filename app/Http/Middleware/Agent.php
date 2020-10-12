@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class Agent
 {
     /**
@@ -17,6 +17,9 @@ class Agent
     {
         if (Auth::user()->role == "agent") {
             return $next($request);
+        }
+        else {
+            abort(404);
         }
     }
 }

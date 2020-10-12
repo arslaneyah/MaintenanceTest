@@ -51,17 +51,17 @@
                                 </div>
                                 @if($fournisseurs->count()>1)
                                     <div class="form-group">
-                                        <span class="form-label">Vehicule</span>
+                                        <span class="form-label">Fournisseurs</span>
                                         <select name="fournisseur" class="custom-select custom-select-lg mb-3">
                                             @foreach ($fournisseurs as $item )
-                                                <option value={{$item->id}}>{{$item->name}}</option>
+                                                <option value={{$item->id}}>{{$item->nom}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 @else
                                     <input name="fournisseur" type="hidden" value="{{$fournisseurs[0]->id}}">
                                 @endif
-                                <input name="type" type="hidden" value="1">
+                                <input  name="type" type="hidden" value="1">
                                 <div class="form-group">
                                     <span class="form-label">Cuve</span>
                                     <select name="cuve" class="custom-select custom-select-lg mb-3">

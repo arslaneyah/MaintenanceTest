@@ -18,6 +18,10 @@ class KilometrageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('Writer',['only' => ['create','store']]);
+    }
     public function index()
     {
         try {

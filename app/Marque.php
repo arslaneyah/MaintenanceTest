@@ -8,5 +8,9 @@ class Marque extends Model
 {
     public function modele()
     {
-    return $this->HasMany('App\Model');
-    }}
+    return $this->HasMany('App\Modele');
+    }
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+}

@@ -3,28 +3,44 @@
   <body>
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="optionSelect">Filtrer</label>
+                    </div>
+                    <select class="custom-select" id="optionSelect">
+                        <option value="1">Cuve</option>
+                        <option value="3">Fournisseur</option>
+                    </select>
+                    <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text"
+                           placeholder="Filtre">
+                </div>
 
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="optionSelect">Filtrer</label>
-          </div>
-          <select class="custom-select" id="optionSelect">
-            <option value="2">Quantité</option>
-            <option value="1">Cuve</option>
-          </select>
-          <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text" placeholder="Filtre">
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="optionSelect">Date</label>
             </div>
-            <input  class="form-control col-sm-12" id="searchinputdate" onkeyup="searchdate()" type="date" placeholder="Date">
-          </div>
+            <form method="POST" action="/Alimentationcuvefilter">
+                @csrf
+            <div class="col">
+                <div class="input-group mb-3">
 
-      </div>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="optionSelect">Date</label>
+                    </div>
+                    <input name="datemin" class="form-control col-sm-12" id="searchinputdate" type="date"
+                           placeholder="Date Min"
+                    required>
+                    <input name="datemax" class="form-control col-sm-12" id="searchinputdate" type="date"
+                           placeholder="Date Max"
+                    required>
+                    <div class="input-group-prepend">
+                        <button class="input-group-text" type="submit">Valider</button>
+                    </div>
+
+                </div>
+            </div>
+            </form>
+        </div>
+    <div class="row">
         <div class="col-lg-12">
                 <div class="overflow-auto">
                   <table class="table table-striped" id="tableP">
@@ -43,10 +59,10 @@
                     <tbody id="table">
 
                         @foreach ($alimcuve as $item )
-                        
+
                       <tr>
-                        <td>{{$item->id}}</td>   
-                        <td>{{$item->cuve->nom}}</td>                                                                                  
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->cuve->nom}}</td>
                          <td>{{$item->quantite}}</td>
                          <td>{{$item->fournisseur->nom}}</td>
                          <td>{{$item->cuve->capacite}}</td>
