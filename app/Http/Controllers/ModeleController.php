@@ -6,6 +6,7 @@ use App\Marque;
 use App\Modele;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ModeleController extends Controller
 {
@@ -99,6 +100,8 @@ class ModeleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Modele::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Marque/');
     }
 }

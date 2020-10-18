@@ -3,14 +3,14 @@
 <body>
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-6">
+        <div class="row justify-content-center">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{$gasoils->count()+1}}</h3>
+                        <h3>{{$gasoils->sum('litres') + $firstg->litres}}</h3>
 
-                        <p>Operations Gasoils</p>
+                        <p>Litres Consommés</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-gas-pump"></i>
@@ -18,21 +18,8 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{$gasoils->sum('litres') + $firstg->litres}}</h3>
 
-                        <p>Litres Consommés</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-fill-drip"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -43,7 +30,7 @@
                         }
 
                         @endphp
-                        <h3>{{$total}}</h3>
+                        <h3>{{$total}} <sub>DA</sub></h3>
 
                         <p>Prix Total</p>
                     </div>
@@ -53,12 +40,15 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{$gasoils->reverse()->first()->kilometrage->dernier_km - $firstg->kilometrage->dernier_km}}</h3>
-
+                        @if(is_null($kilometrages->first())==false)
+                        <h3>{{$kilometrages->reverse()->first()->dernier_km - $kilometrages->first()->dernier_km}}</h3>
+                        @else
+                            <h3>0</h3>
+                        @endif
                         <p>Kilometres Parcourus</p>
                     </div>
                     <div class="icon">
@@ -67,37 +57,20 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{$gasoils->reverse()->first()->kilometrage->dernier_km}}</h3>
+                        @if(is_null($kilometrages->first())==false)
+                        <h3>{{$kilometrages->reverse()->first()->dernier_km}}</h3>
+                        @else
+                            <h3>{{$kilometrages->first()->dernier_km}}</h3>
+                        @endif
 
                         <p>Dernier Kilometrage</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        @php
-                            $total=($firstg->litres)*($firstg->fournisseur->prix) ;
-                        foreach ($gasoils as $item){
-                            $total=$total+ ($item->litres)*($item->fournisseur->prix);
-                        }
-
-                        @endphp
-                        <h3>{{$total}}</h3>
-
-                        <p>Prix Total</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-dollar-sign"></i>
                     </div>
                 </div>
             </div>
@@ -199,7 +172,7 @@
                                     <td>{{$item->vehicule->matricule}}</td>
                                     <td>{{$item->dernier_km}}</td>
                                     <td>{{$item->date}}</td>
-                                    <td>{{$kmx-$item->dernier_km}}</td>
+                                    <td>{{$item->dernier_km-$kmx}}</td>
                                     @php
                                         $kmx=$item->dernier_km;
                                     @endphp

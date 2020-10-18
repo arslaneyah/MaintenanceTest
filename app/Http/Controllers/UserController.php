@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Unite;
 use Illuminate\Http\Request;
-use App\User ;
+use App\User;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -16,7 +17,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->middleware('Admin');
     }
@@ -29,9 +31,10 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+
     public function index()
     {
-        $users=User::all();
+        $users = User::all();
         return view('Admin/users/index')->with('users', $users);
     }
 
@@ -42,7 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $unites= Unite::all();
+        $unites = Unite::all();
         return view('Admin/users/create')->with('unites', $unites);
 
     }
@@ -50,28 +53,38 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $userauth = Auth::user();
-$user=new User();
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->role = $request->input('role') ;
-            $user->unite_id =  $request->input('unite') ;
-            $user-> created_by= $userauth->id ;
-            $user->password = Hash::make($request->input('password'));
-            $user->save();
+        $users = User::all();
+        $user = new User();
+        if ($users->contains('email', $request->input('email')))
+        {
+        Alert::error('Utilisateur Existant', 'Echec : veuillez verifier les informations introduites');
+        return redirect('/User/create');
+    }
+    else{
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
+        $user->unite_id = $request->input('unite');
+        $user->created_by = $userauth->id;
+        $user->password = Hash::make($request->input('password'));
+        $user->is_active=1 ;
+        $user->save();
         return redirect('/User/');
+        Alert::sucess('Utilisateur Ajouté', 'Utilisateur ajouté avec succés');
 
+    }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -82,7 +95,7 @@ $user=new User();
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -93,8 +106,8 @@ $user=new User();
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -105,11 +118,15 @@ $user=new User();
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $user=User::find($id);
+        $user->is_active=0;
+        $user->save();
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/User/');
     }
 }

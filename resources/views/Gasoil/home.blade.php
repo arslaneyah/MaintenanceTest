@@ -1,10 +1,9 @@
 @extends('layouts.app')
-<html>
-<body>
 @section('content')
     <div class="container">
+
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -18,11 +17,11 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{$gasoils->count('litres')}}</h3>
+                        <h3>{{$gasoils->sum('litres')}}</h3>
 
                         <p>Litres Consommés</p>
                     </div>
@@ -32,14 +31,14 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col-lg col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
                         @php
                             $total=0 ;
                         foreach ($gasoils as $item){
-                            $total=$total+ ($gasoils->litres)*($gasoils->fournisseur->prix);
+                            $total=$total+ ($item->litres)*($item->fournisseur->prix);
                         }
 
                         @endphp
@@ -54,31 +53,47 @@
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-sm-6">
+        <div class="row justify-content-center mb-1 ">
+            <div class="col-sm">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="optionSelect">Filtrer</label>
                     </div>
-                    <select class="custom-select" id="optionSelect">
+                    <select class="custom-select col" id="optionSelect">
                         <option value="2">n° parc</option>
                         <option value="3">Matricule</option>
+                        @if(Auth::user()->role=='admin')
+                            <option value="1">Unité</option>
+                        @endif
+
                     </select>
-                    <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text"
+                    <input class="form-control" id="searchinput" onkeyup="search()" type="text"
                            placeholder="Filtre">
                 </div>
 
             </div>
 
-            <div class="col">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="optionSelect">Date</label>
+            <form method="POST" action="/gasoilfilter">
+                @csrf
+                <div class="col">
+                    <div class="input-group ">
+
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="optionSelect">Date</label>
+                        </div>
+                        <input name="datemin" class="form-control col-sm" type="datetime-local"
+                               placeholder="Date Min"
+                               required>
+                        <input name="datemax" class="form-control col-sm" type="datetime-local"
+                               placeholder="Date Max"
+                               required>
+                        <div class="input-group-prepend">
+                            <button class="input-group-text" type="submit">Valider</button>
+                        </div>
+
                     </div>
-                    <input class="form-control col-sm-12" id="searchinputdate" onkeyup="searchdate()" type="date"
-                           placeholder="Date">
                 </div>
-            </div>
+            </form>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-12">
@@ -94,7 +109,12 @@
                             <th onclick="sortTable(5)" scope="col">Date et Heure</th>
                             <th onclick="sortTable(6)" scope="col">Litres</th>
                             <th onclick="sortTable(7)" scope="col">Prix (DA)</th>
+                            <th onclick="sortTable(7)" scope="col">Type</th>
                             <th onclick="sortTable(8)" scope="col">Agent</th>
+                            @if(Auth::user()->role== 'admin')
+                                <th>Action</th>
+                            @endif
+
                         </tr>
                         </thead>
 
@@ -110,7 +130,24 @@
                                 <td>{{$item->kilometrage->date}}</td>
                                 <td>{{$item->litres}}</td>
                                 <td>{{($item->litres)*($item->fournisseur->prix)}}</td>
+                                <td>@if($item->type==1)
+                                    Par Cuve
+                                    @else
+                                    Par Bons
+                                    @endif
+                                </td>
                                 <td>{{$item->kilometrage->user->name}}</td>
+                                @if(Auth::user()->role== 'admin')
+                                    <td>
+                                        <form method="post" action="/Gasoil/{{$item->id}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="far fa-times-circle"></i></button>
+                                        </form>
+
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
@@ -122,6 +159,4 @@
     </div>
 @endsection
 
-</body>
 
-</html>

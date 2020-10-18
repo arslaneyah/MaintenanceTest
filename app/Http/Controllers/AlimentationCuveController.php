@@ -28,19 +28,25 @@ class AlimentationCuveController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->role == 'agent') {
+        if ($user->role == 'admin') {
+            $alimcuve = Alimentation_Cuve::All();
+            $cuves = Cuve::all();
+            $cuves = $cuves->except(99);
+
+
+
+
+        } else {
             $unite = $user->unite_id;
             $alimcuve = Alimentation_Cuve::join('cuves', 'cuve_id', 'cuves.id')
                 ->where('unite_id', 'like', $unite)
                 ->select('alimentation_cuves.*')
                 ->get();
-
-
-        } else {
-            $alimcuve = Alimentation_Cuve::All();
+            $cuves = Cuve::where('unite_id', $unite)->get();
+            $cuves = $cuves->except(99);
         }
 
-        return view('AlimentationCuve/cuveindex')->with('alimcuve', $alimcuve);
+        return view('AlimentationCuve/cuveindex')->with('alimcuve', $alimcuve)->with('cuves', $cuves);
 
 
     }
@@ -139,13 +145,28 @@ class AlimentationCuveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alicuve = Alimentation_Cuve::find($id);
+        $cuve = $alicuve->cuve;
+        $cuve->quantite_gasoil = $cuve->quantite_gasoil - $alicuve->quantite;
+        $cuve->save();
+        Alimentation_Cuve::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Alimentation_Cuve/');
+
+
     }
 
     public function indexdate(Request $request)
     {
         $user = Auth::user();
-        if ($user->role == "agent") {
+        if ($user->role == "admin") {
+            $alimcuve = Alimentation_Cuve::whereBetween('date', [$request->input('datemin'), $request->input('datemax')])
+                ->orderBy('date', 'desc')
+                ->get();
+            $cuves = Cuve::all();
+            $cuves = $cuves->except(99);
+
+        } else {
             $unite = $user->unite_id;
             $unite = substr(strval($unite), 0, 2);
             $alimcuve = Alimentation_Cuve::join('cuves', 'cuve_id', 'cuves.id')
@@ -153,13 +174,11 @@ class AlimentationCuveController extends Controller
                 ->whereBetween('date', [$request->input('datemin'), $request->input('datemax')])
                 ->orderBy('date', 'desc')
                 ->get();
+            $cuves = Cuve::where('unite_id', 'like', $unite)->get();
+            $cuves = $cuves->except(99);
 
-        } else {
-            $alimcuve = Alimentation_Cuve::whereBetween('date', [$request->input('datemin'), $request->input('datemax')])
-                ->orderBy('date', 'desc')
-                ->get();;
         }
 
-        return view('AlimentationCuve/cuveindex')->with('alimcuve', $alimcuve);
+        return view('AlimentationCuve/cuveindex')->with('alimcuve', $alimcuve)->with('cuves', $cuves);
     }
 }

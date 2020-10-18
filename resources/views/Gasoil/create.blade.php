@@ -42,7 +42,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <span class="form-label">Vehicule</span>
+                                    <label>Vehicule</label>
                                     <select name="vehicule" class="custom-select custom-select-lg mb-3">
                                         @foreach ($vehicules as $item )
                                             <option value={{$item->id}}>{{$item->n_park}}</option>
@@ -51,7 +51,7 @@
                                 </div>
                                 @if($fournisseurs->count()>1)
                                     <div class="form-group">
-                                        <span class="form-label">Fournisseurs</span>
+                                        <label>Fournisseurs</label>
                                         <select name="fournisseur" class="custom-select custom-select-lg mb-3">
                                             @foreach ($fournisseurs as $item )
                                                 <option value={{$item->id}}>{{$item->nom}}</option>
@@ -63,7 +63,7 @@
                                 @endif
                                 <input  name="type" type="hidden" value="1">
                                 <div class="form-group">
-                                    <span class="form-label">Cuve</span>
+                                    <label>Cuve</label>
                                     <select name="cuve" class="custom-select custom-select-lg mb-3">
                                         @foreach ($cuves as $item )
                                             <option value={{$item->id}}>{{$item->nom}}</option>
@@ -94,7 +94,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <span class="form-label">Vehicule</span>
+                                    <label>Vehicule</label>
                                     <select name="vehicule" class="custom-select custom-select-lg mb-3">
                                         @foreach ($vehicules as $item )
                                             <option value={{$item->id}}>{{$item->n_park}}</option>
@@ -103,7 +103,7 @@
                                 </div>
                                 @if($fournisseurs->count()>1)
                                     <div class="form-group">
-                                        <span class="form-label">Vehicule</span>
+                                        <label >Vehicule</label>
                                         <select name="fournisseur" class="custom-select custom-select-lg mb-3">
                                             @foreach ($fournisseurs as $item )
                                                 <option value={{$item->id}}>{{$item->name}}</option>

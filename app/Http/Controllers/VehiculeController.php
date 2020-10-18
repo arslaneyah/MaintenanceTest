@@ -18,7 +18,7 @@ class VehiculeController extends Controller
      */
     public function __construct(){
 
-        $this->middleware('Admin');
+        $this->middleware('Admin')->except('statsvehicule');
     }
     public function index()
     {
@@ -114,6 +114,16 @@ class VehiculeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Vehicule::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Marque/');
+    }
+    public function statsvehicule(){
+        try {
+            $vehicules = Vehicule::All()->sortBy('n_park');
+            return view('Vehicule/createstat')->with('vehicules', $vehicules);
+        } catch (Exception $e) {
+            return view('welcome');
+        }
     }
 }

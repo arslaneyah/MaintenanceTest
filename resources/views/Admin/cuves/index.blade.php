@@ -27,6 +27,7 @@
                             <th onclick="sortTable(2)" scope="col">Capacite (litres)</th>
                             <th onclick="sortTable(3)" scope="col">Unité</th>
                             <th onclick="sortTable(3)" scope="col">Quantité (litres)</th>
+                            <th>Action</th>
 
                         </tr>
                         </thead>
@@ -41,6 +42,14 @@
                                 <td>{{$item->capacite}}</td>
                                 <td>{{$item->unite->name}}</td>
                                 <td>{{$item->quantite_gasoil}}</td>
+                                <td>
+                                    <form method="post" action="/Cuve/{{$item->id}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

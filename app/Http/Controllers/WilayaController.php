@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Vehicule;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class WilayaController extends Controller
 {
@@ -79,6 +81,8 @@ class WilayaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Vehicule::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Marque/');
     }
 }

@@ -6,6 +6,7 @@
 <body>
   @section('content')
   <div class="container">
+
       <div class="row justify-content-center">
           <div class="col-md-8">
               <div class="card">
@@ -25,7 +26,7 @@
           </div>
 
           <div class="form-group">
-            <span class="form-label">Cuve</span>
+              <label for="cuve">Cuve</label>
             <select name="cuve" class="custom-select custom-select-lg mb-3">
               @foreach ($cuves as $item )
               <option value={{$item->id}}>{{$item->nom}}</option>
@@ -33,7 +34,7 @@
               </select>
           </div>
           <div class="form-group">
-            <span class="form-label">Fournisseur</span>
+              <label>Fournisseur</label>
             <select name="fournisseur" class="custom-select custom-select-lg mb-3">
               @foreach ($fournisseurs as $item )
               <option value={{$item->id}}>{{$item->nom}}</option>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Alimentation_Cuve;
 use App\Cuve;
 use App\Unite;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CuveController extends Controller
 {
@@ -94,6 +96,10 @@ class CuveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cuve::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Cuve/');
+
+
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Imports;
 
 use App\Kilometrage;
-use App\Gasoil ; 
-use App\Vehicule ; 
-use App\Cuve ; 
+use App\Gasoil ;
+use App\Vehicule ;
+use App\Cuve ;
 use App\Fournisseur ;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -22,31 +22,30 @@ class KilometragesImport implements ToCollection
     */
     public function collection(Collection $rows)
     {
+        $user= Auth::user();
+        $cuve = Cuve::where('unite_id', $user->unite->id )->first() ;
         try{
-        foreach ($rows as $row=>$value) 
+        foreach ($rows as $row=>$value)
         {
             if($row>0){
                 $date= \PhpOffice\PhpSpreadsheet\Shared\Date::excelTodateTimeObject($value[2]);
-                $user= Auth::user();
-                $vehicule = Vehicule::where('id',$value[3])->first();
-                $cuve = Cuve::where('id', $value[5] )->first() ;
+
+                $vehicule = Vehicule::where('n_park',$value[3])->first();
                 $cuve->quantite_gasoil=($cuve->quantite_gasoil)-($value[1]) ;
                 $km= new Kilometrage();
-                $km->km_avant= $vehicule->kilometrage->dernier_km ;
                 $km->dernier_km=$value[0] ;
                 $km->date= $date;
                 $km->user_id=$user->id;
-                $km->save();
-                $vehicule->kilometrage_id=$km->id ;
+                $km->vehicule_id= $vehicule->id;
+                $km->save();;
                 $gasoil= new Gasoil();
-                $gasoil->vehicule_id= $vehicule->id;
                 $gasoil->kilometrage_id=$km->id ;
-                $gasoil->litres = $value[1]; 
-                $gasoil->fournisseur_id=$value[4];
+                $gasoil->litres = $value[1];
+                $gasoil->fournisseur_id=Fournisseur::all()->first()->id;
                 $gasoil->cuve_id=$cuve->id ;
-                $vehicule->save();
-                $gasoil-> save() ; 
-                
+                $gasoil->type=1 ;
+                $gasoil-> save() ;
+
 
         }
         Alert::success('Operation Conclue', 'Succés');
@@ -56,10 +55,10 @@ class KilometragesImport implements ToCollection
         }catch(Exception $e){
 
             Alert::error('erreur', 'Succés');
-    
+
         }
 
         }
-        
+
     }
 

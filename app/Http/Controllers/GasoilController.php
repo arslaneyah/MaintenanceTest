@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Alimentation_Cuve;
 use Illuminate\Http\Request;
 use App\Kilometrage;
 use App\Gasoil;
 use App\Vehicule;
 use App\Cuve;
 use App\Fournisseur;
-
+use PDF ;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Exceptions\CustomException;
@@ -58,9 +59,10 @@ class GasoilController extends Controller
             $cuves = $cuves->except(99);
         } else {
             $cuves = Cuve::All();
+            $cuves = $cuves->except(99);
         }
         $fournisseur = Fournisseur::where('etat', 1)->get();
-        $vehicules = Vehicule::All();
+        $vehicules = Vehicule::All()->sortBy('n_park');
         return view('Gasoil/create')->with('vehicules', $vehicules)->with('fournisseurs', $fournisseur)->with('cuves', $cuves);
 
     }
@@ -78,6 +80,7 @@ class GasoilController extends Controller
         $user = Auth::user();
         $vehicule = Vehicule::where('id', $request->input('vehicule'))->first();
         $kilometrage = Kilometrage::where('vehicule_id', $vehicule->id)->orderby('date', 'desc')->first();
+        $gasoil = new Gasoil();
         if ($request->input('type') == 1) {
             $cuve = Cuve::where('id', $request->input('cuve'))->first();
             if ($request->input("gasoil") > ($cuve->quantite_gasoil)) {
@@ -87,9 +90,7 @@ class GasoilController extends Controller
                 if (is_null($kilometrage) == false) {
                     if ($request->input("km") == ($kilometrage->dernier_km)) {
                         $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($request->input('gasoil'));
-                        $gasoil = new Gasoil();
-                        $gasoil->vehicule_id = $vehicule->id;
-                        $gasoil->kilometrage_id = $kilometrage;
+                        $gasoil->kilometrage_id = $kilometrage->id;
                         $gasoil->litres = $request->input('gasoil');
                         $gasoil->fournisseur_id = $request->input('fournisseur');
                         $gasoil->cuve_id = $cuve->id;
@@ -99,7 +100,7 @@ class GasoilController extends Controller
                         Alert::success('Operation Conclue', 'Succés');
 
                     } else {
-                        if ($request->input("km") < ($kilometrage->dernier_km)) {
+                        if (($request->input("km") < ($kilometrage->dernier_km)) && ($request->input("date")>=$kilometrage->date)) {
                             Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
 
                         } else {
@@ -110,7 +111,6 @@ class GasoilController extends Controller
                             $km->user_id = $user->id;
                             $km->vehicule_id = $vehicule->id;
                             $km->save();
-                            $gasoil = new Gasoil();
                             $gasoil->kilometrage_id = $km->id;
                             $gasoil->litres = $request->input('gasoil');
                             $gasoil->fournisseur_id = $request->input('fournisseur');
@@ -119,6 +119,7 @@ class GasoilController extends Controller
                             $cuve->save();
                             $gasoil->save();
                             Alert::success('Operation Conclue', 'Succés');
+
                         }
                     }
 
@@ -130,7 +131,6 @@ class GasoilController extends Controller
                     $km->user_id = $user->id;
                     $km->vehicule_id = $vehicule->id;
                     $km->save();
-                    $gasoil = new Gasoil();
                     $gasoil->kilometrage_id = $km->id;
                     $gasoil->litres = $request->input('gasoil');
                     $gasoil->fournisseur_id = $request->input('fournisseur');
@@ -148,7 +148,6 @@ class GasoilController extends Controller
 
                 if ($request->input("km") == ($kilometrage->dernier_km)) {
                     $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                    $gasoil = new Gasoil();
                     $gasoil->kilometrage_id = $vehicule->kilometrage_id;
                     $gasoil->litres = $litres;
                     $gasoil->fournisseur_id = $request->input('fournisseur');
@@ -169,7 +168,6 @@ class GasoilController extends Controller
                         $km->vehicule_id = $vehicule->id;
                         $km->save();
                         $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                        $gasoil = new Gasoil();
                         $gasoil->kilometrage_id = $km->id;
                         $gasoil->litres = $litres;
                         $gasoil->fournisseur_id = $request->input('fournisseur');
@@ -177,6 +175,7 @@ class GasoilController extends Controller
                         $gasoil->type = $request->input('type');
                         $gasoil->save();
                         Alert::success('Operation Conclue', 'Succés');
+
                     }
                 }
 
@@ -188,7 +187,6 @@ class GasoilController extends Controller
                 $km->vehicule_id = $vehicule->id;
                 $km->save();
                 $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                $gasoil = new Gasoil();
                 $gasoil->kilometrage_id = $km->id;;
                 $gasoil->litres = $litres;
                 $gasoil->fournisseur_id = $request->input('fournisseur');
@@ -200,7 +198,8 @@ class GasoilController extends Controller
         }
 
 
-        return redirect('Gasoil/create');
+        return redirect()->route('gasoilpdf',[$gasoil]);
+        //return redirect('/Gasoil');
     }
 
     /**
@@ -245,7 +244,14 @@ class GasoilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gasoil=Gasoil::find($id);
+        $cuve = $gasoil->cuve;
+        $cuve->quantite_gasoil = $cuve->quantite_gasoil + $gasoil->quantite;
+        $cuve->save();
+        Gasoil::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Gasoil/');
+
     }
 
     public function Vgasoil(Request $request)
@@ -258,7 +264,7 @@ class GasoilController extends Controller
             ->get();
         $kilometrages = Kilometrage::where('vehicule_id', $request->input('vehicule'))
             ->whereBetween('date', [$request->input('datemin'), $request->input('datemax')])
-            ->orderby('date', 'desc')
+            ->orderby('date', 'asc')
             ->get();
         $firstg = $gasoils->first();
         if (is_null($firstg) && is_null($kilometrages->first())) {
@@ -274,5 +280,25 @@ class GasoilController extends Controller
                 ->with('kilometrages', $kilometrages);
         }
 
+    }
+    public function gasoilfilter(Request $request){
+        try {
+            $gasoils = Gasoil::join('kilometrages', 'gasoils.kilometrage_id', '=', 'kilometrages.id')
+                ->whereBetween('date',[$request->input('datemin'),$request->input('datemax')])
+                ->select('gasoils.*')
+                ->orderBy('kilometrages.date', 'desc')
+                ->get();
+
+            return view('Gasoil/home')->with('gasoils', $gasoils);
+        } catch (Exception $e) {
+            return view('welcome');
+        }
+    }
+    public function printpdf($gasoil){
+        if(is_null($gasoil)==false){
+        $data=Gasoil::find($gasoil);
+        $pdf = PDF::loadView('testpdf',array('n_park'=>$data));
+        return $pdf->download($data->id.'-'.$data->kilometrage->vehicule->n_park.'-'.$data->kilometrage->date);
+        }
     }
 }

@@ -17,7 +17,7 @@
                 </div>
 
             </div>
-            <div class="col-lg-14">
+            <div class="col-lg">
                 <div class="overflow-auto">
                     <table class="table table-striped" id="tableP">
                         <thead class="thead-dark">
@@ -27,6 +27,11 @@
                             <th onclick="sortTable(2)" scope="col">Email</th>
                             <th >Mot de passe</th>
                             <th onclick="sortTable(4)" scope="col">Unite</th>
+                            <th onclick="sortTable(5)" scope="col">Role</th>
+                            <th onclick="sortTable(6)" scope="col">Actif</th>
+
+                            <th>Action</th>
+
 
                         </tr>
                         </thead>
@@ -41,6 +46,17 @@
                                 <td>{{$item->email}}</td>
                                 <td>{{$item->password}}</td>
                                 <td>{{$item->unite->name}}</td>
+                                <td>{{$item->role}}</td>
+                                <td>{{$item->is_active}}</td>
+
+                                <td>
+                                    <form method="post" action="/User/{{$item->id}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

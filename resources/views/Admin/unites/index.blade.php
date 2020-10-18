@@ -25,6 +25,7 @@
                             <th onclick="sortTable(0)" scope="col">#</th>
                             <th onclick="sortTable(1)" scope="col">Nom</th>
                             <th onclick="sortTable(2)" scope="col">Wilaya</th>
+                            <th>Action</th>
 
 
                         </tr>
@@ -38,6 +39,14 @@
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->wilaya->name}}</td>
+                                <td>
+                                    <form method="post" action="/Unite/{{$item->id}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

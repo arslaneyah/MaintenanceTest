@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Unite;
 use App\Wilaya;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UniteController extends Controller
 {
@@ -92,6 +93,8 @@ class UniteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Unite::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Unite/');
     }
 }

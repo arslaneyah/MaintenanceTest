@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Alimentation_Cuve;
 use App\Fournisseur;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class FournisseurController extends Controller
 {
@@ -91,6 +93,12 @@ class FournisseurController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fournisseur=Fournisseur::find($id);
+        $fournisseur->etat=0;
+        $fournisseur->save();
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Fournisseur/');
+
+
     }
 }

@@ -34,6 +34,7 @@
                             <th onclick="sortTable(6)" scope="col">Année</th>
                             <th onclick="sortTable(7)" scope="col">Unité</th>
                             <th onclick="sortTable(8)" scope="col">Crée Par</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -51,6 +52,14 @@
                                 <td>{{$item->annee}}</td>
                                 <td>{{$item->unite->name}}</td>
                                 <td>{{$item->user->name}}</td>
+                                <td>
+                                    <form method="post" action="/Vehicule/{{$item->id}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

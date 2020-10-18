@@ -20,7 +20,7 @@
 
                             <div class="form-group">
                                 <label for="date">Date de fin</label>
-                                <input type="datetime-local" class="form-control" id="datemax" name="datemax" placeholder="date de fin" required>
+                                <input type="datetime-local" class="form-control" id="datemax" name="datemax" placeholder="date de Fin" required>
                             </div>
 
                             <div class="form-group">

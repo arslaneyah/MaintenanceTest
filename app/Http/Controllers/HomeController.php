@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cuve;
 use Illuminate\Http\Request;
-use App\Gasoil ; 
+use App\Gasoil ;
+use Auth ;
 class HomeController extends Controller
 {
     /**
@@ -23,9 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-  
-        return view('welcome');
+        if(Auth::user()->role==('admin')) {
+            $cuves=Cuve::all();
+            $cuves=$cuves->except(99);
+            return view('welcome')->with(['cuves'=>$cuves]);
+        }else
+        {
+            return redirect('/Gasoil');
+        }
 
- 
     }
 }

@@ -24,12 +24,7 @@ class KilometrageController extends Controller
     }
     public function index()
     {
-        try {
-            $vehicules = Vehicule::All();
-            return view('Kilometrage/index')->with('vehicules', $vehicules);
-        } catch (Exception $e) {
-            return view('welcome');
-        }
+
     }
 
     /**
@@ -39,7 +34,7 @@ class KilometrageController extends Controller
      */
     public function create()
     {
-        $vehicules = Vehicule::All();
+        $vehicules = Vehicule::All()->sortBy('n_park');
         return view('Kilometrage/create_kilometrage')->with('vehicules', $vehicules);
     }
 
@@ -129,7 +124,11 @@ class KilometrageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Kilometrage::destroy($id);
+        Alert::success('Operation Conclue', 'Succés');
+        return redirect('/Kilometrage/');
+
+
     }
 
 }

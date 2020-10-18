@@ -26,6 +26,8 @@
                             <th onclick="sortTable(1)" scope="col">Désignation</th>
                             <th onclick="sortTable(2)" scope="col">Marque</th>
                             <th onclick="sortTable(3)" scope="col">Crée Par</th>
+                            <th>Action</th>
+
                         </tr>
                         </thead>
 
@@ -38,6 +40,14 @@
                                 <td>{{$item->modele}}</td>
                                 <td>{{$item->marque->nom}}</td>
                                 <td>{{$item->user->name}}</td>
+                                <td>
+                                    <form method="post" action="/Modele/{{$item->id}}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

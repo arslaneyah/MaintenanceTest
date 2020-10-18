@@ -23,7 +23,7 @@
                             </div>
 
                             <div class="form-group">
-                                <span class="form-label">Vehicule</span>
+                                <label>Vehicule</label>
                                 <select name="vehicule" class="custom-select custom-select-lg mb-3">
                                     @foreach ($vehicules as $item )
                                         <option value={{$item->id}}>{{$item->n_park}}</option>
