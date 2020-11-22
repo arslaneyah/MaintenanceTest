@@ -59,9 +59,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $userauth = Auth::user();
-        $users = User::all();
         $user = new User();
-        if ($users->contains('email', $request->input('email')))
+        if (User::all()->contains('email', $request->input('email')))
         {
         Alert::error('Utilisateur Existant', 'Echec : veuillez verifier les informations introduites');
         return redirect('/User/create');
@@ -100,7 +99,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user=User::find($id);
+        $unites=Unite::all();
+        return view('admin/users/edit')->with('user',$user)->with('unites',$unites);
     }
 
     /**
@@ -112,8 +113,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $userauth = Auth::user();
+        $user = User::find($id);
+    if ((!($user->email == $request->input('email')) && !(User::all()->contains('email', $request->input('email'))))
+        || $user->email == $request->input('email')) {
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
+        $user->unite_id = $request->input('unite');
+        $user->created_by = $userauth->id;
+        if (!is_null($request->input('newpassword')) ) {
+            $user->password = Hash::make($request->input('newpassword'));
+        }
+        $user->is_active = 1;
+        $user->save();
+        return redirect('/User/');
+        Alert::sucess('Utilisateur Modifié', 'Utilisateur modifié avec succés');
+
+    } else {
+        Alert::error('Utilisateur Existant', 'Echec : veuillez verifier les informations introduites');
+        return redirect('/User/create');
+
     }
+}
+
+
 
     /**
      * Remove the specified resource from storage.

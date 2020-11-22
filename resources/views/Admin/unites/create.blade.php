@@ -6,7 +6,7 @@
 <body>
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center pt-lg-5">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Ajouter Cuve</div>
@@ -31,7 +31,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
                         </form>
                     </div>
                 </div>

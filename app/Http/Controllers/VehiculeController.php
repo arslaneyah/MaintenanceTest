@@ -58,14 +58,14 @@ class VehiculeController extends Controller
         else {
             $vehicule = new Vehicule();
             $vehicule->n_park = $request->input('npark');
-            $vehicule->n_chassis = $request->input('n_chassis');
+            $vehicule->n_chassis = $request->input('nchassis');
             $vehicule->matricule = $request->input('matricule');
             $vehicule->annee = $request->input('annee');
             $vehicule->unite_id = $request->input('unite');
             $vehicule->modele_id = $request->input('modele');
             $vehicule->user_id = $user->id;
             $vehicule->save();
-            Alert::sucess('Vehicule Ajouté', 'Véhicule ajouté avec succés');
+            Alert::success('Vehicule Ajouté', 'Véhicule ajouté avec succés');
 
             return redirect('/Vehicule');
         }

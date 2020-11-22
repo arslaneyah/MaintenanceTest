@@ -51,6 +51,7 @@ class CuveController extends Controller
         $cuve->quantite_gasoil= $request->input('quantite');
         $cuve->unite_id= $request->input('unite');
         $cuve->save();
+        Alert::success('Operation Conclue', 'Succés');
         return redirect('/Cuve');
     }
 
@@ -73,7 +74,9 @@ class CuveController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cuve=Cuve::find($id);
+        $unites=Unite::all();
+        return view('Admin/cuves/edit')->with('unites',$unites)->with('cuve',$cuve);
     }
 
     /**
@@ -85,7 +88,33 @@ class CuveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cuve=Cuve::find($id);
+        if($id==$request->input('id')){
+            $cuve->id=$request->input('id');
+            $cuve->nom=$request->input('nom');
+            $cuve->quantite_gasoil=$request->input('quantite');
+            $cuve->capacite=$request->input('capacite');
+            $cuve->unite_id=$request->input('unite');
+            $cuve->save();
+            Alert::success('Operation Conclue', 'Succés');
+            return redirect('/Cuve');
+        }else{
+            if(is_null(Cuve::find($request->input('id')))){
+                $cuve->id=$request->input('id');
+                $cuve->nom=$request->input('nom');
+                $cuve->quantite_gasoil=$request->input('quantite');
+                $cuve->capacite=$request->input('capacite');
+                $cuve->unite_id=$request->input('unite');
+                $cuve->save();
+                Alert::success('Operation Conclue', 'Succés');
+                return redirect('/Cuve');
+
+            }else{
+                Alert::error('Erreur','Id deja existant');
+                return redirect('/Cuve/'.$id.'/edit');
+
+            }
+        }
     }
 
     /**

@@ -70,7 +70,9 @@ class FournisseurController extends Controller
      */
     public function edit($id)
     {
-        //
+        $fournisseur=Fournisseur::find($id);
+        return view('admin/fournisseurs/edit')->with('fournisseur',$fournisseur);
+
     }
 
     /**
@@ -82,7 +84,31 @@ class FournisseurController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $fournisseur=Fournisseur::find($id);
+        if($id==$request->input('id')){
+            $fournisseur->nom= $request->input('nom');
+            $fournisseur->prix= $request->input('prix');
+            $fournisseur->etat= $request->input('etat');
+            $fournisseur->save();
+            Alert::success('Operation Conclue', 'Succés');
+            return redirect('/Fournisseur');
+        }else{
+            if (is_null(Fournisseur::find($request->input('id')))){
+                $fournisseur->id=$request->input('id');
+                $fournisseur->nom= $request->input('nom');
+                $fournisseur->prix= $request->input('prix');
+                $fournisseur->etat= $request->input('etat');
+                $fournisseur->save();
+                Alert::success('Operation Conclue', 'Succés');
+                return redirect('/Fournisseur');
+
+
+            }else{
+                Alert::error('Erreur','Id deja existant');
+                return redirect('/Fournisseur/'.$id.'/edit');
+
+            }
+        }
     }
 
     /**

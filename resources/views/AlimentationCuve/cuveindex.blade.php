@@ -57,9 +57,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="overflow-auto">
-                    <table class="table table-striped" id="tableP">
-                        <thead class="thead-dark">
+                <div class="card elevation-3">
+                    <div class="card-body">
+                        <div class="overflow-auto">
+                            <table id="dTable" class="table table-bordered table-hover ">
                         <tr>
                             <th onclick="sortTable(0)" scope="col">#</th>
                             <th onclick="sortTable(1)" scope="col">Cuve</th>
@@ -101,6 +102,9 @@
                         @endforeach
                         </tbody>
                     </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

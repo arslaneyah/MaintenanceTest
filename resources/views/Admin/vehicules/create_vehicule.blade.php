@@ -16,7 +16,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="npark">n° park</label>
-                                <input required type="number" class="form-control" id="npark" name="npark"  placeholder="numéro de park">
+                                <input required type="text" class="form-control" id="npark" name="npark"  placeholder="numéro de park">
                             </div>
                             <div class="form-group">
                                 <label for="nchassis">n° Chassis</label>
@@ -24,11 +24,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="matricule">Matricule</label>
-                                <input required type="number" class="form-control" id="matricule" name="matricule"  placeholder="ex: 12345-678-99">
+                                <input required type="text" class="form-control" id="matricule" name="matricule"  placeholder="ex: 12345-678-99">
                             </div>
                             <div class="form-group">
                                 <label for="annee">Année</label>
-                                <input required type="number" class="form-control" id="annee" name="annee"  placeholder="ex : 1999">
+                                <input required type="number" class="form-control" id="annee" name="annee"  placeholder="ex : 1999" min="1900">
                             </div>
 
                             <div class="form-group">

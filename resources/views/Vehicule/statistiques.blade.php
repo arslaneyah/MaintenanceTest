@@ -90,12 +90,16 @@
 
                 <div class="tab-content">
                     <div id="gasoil" class=" overflow-auto container tab-pane active">
-                        <table id="tableP" class="table table-striped">
+                        <div class="card elevation-3">
+                            <div class="card-body">
+                                <div class="overflow-auto">
+                                    <table id="dTable" class="table table-bordered table-hover ">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Unité</th>
                                 <th scope="col">n° Parc</th>
                                 <th scope="col">Matricule</th>
+                                <th scope="col">N° Bon</th>
                                 <th scope="col">Kilometrage</th>
                                 <th scope="col">Date et Heure</th>
                                 <th scope="col">Litres</th>
@@ -110,6 +114,7 @@
                                 <td>{{$firstg->kilometrage->vehicule->unite->name}}</td>
                                 <td>{{$firstg->kilometrage->vehicule->n_park}}</td>
                                 <td>{{$firstg->kilometrage->vehicule->matricule}}</td>
+                                <td>{{$firstg->n_bon}}</td>
                                 <td>{{$firstg->kilometrage->dernier_km}}</td>
                                 <td>{{$firstg->kilometrage->date}}</td>
                                 <td>{{$firstg->litres}}</td>
@@ -129,11 +134,17 @@
                                     <td>{{$item->kilometrage->vehicule->unite->name}}</td>
                                     <td>{{$item->kilometrage->vehicule->n_park}}</td>
                                     <td>{{$item->kilometrage->vehicule->matricule}}</td>
+                                    <td>{{$item->n_bon}}</td>
                                     <td>{{$item->kilometrage->dernier_km}}</td>
                                     <td>{{$item->kilometrage->date}}</td>
                                     <td>{{$item->litres}}</td>
                                     <td>{{($item->litres)*($item->fournisseur->prix)}}</td>
-                                    <td>{{($litres/(($item->kilometrage->dernier_km)-($km)))*100}}</td>
+                                    @if((($item->kilometrage->dernier_km)-($km))==0)
+                                        <td>N/D</td>
+                                    @else
+                                        <td>{{($litres/(($item->kilometrage->dernier_km)-($km)))*100}}</td>
+
+                                    @endif
                                     @php
                                         $litres=$item->litres ;
                                         $km=$item->kilometrage->dernier_km ;
@@ -144,11 +155,16 @@
                             </tbody>
 
                         </table>
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="kilom" class=" overflow-auto container tab-pane fade">
-                        <table id="tableP" class="table table-striped">
+                        <div class="card elevation-3">
+                            <div class="card-body">
+                                <div class="overflow-auto">
+                                    <table id="dTable" class="table table-bordered table-hover ">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Unité</th>
@@ -181,6 +197,9 @@
                             </tbody>
 
                         </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

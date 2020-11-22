@@ -70,7 +70,8 @@ class MarqueController extends Controller
      */
     public function edit($id)
     {
-        //
+        $marque= Marque::find($id);
+        return view('Admin/vehicules/edit_marque')->with('marque',$marque);
     }
 
     /**
@@ -82,7 +83,13 @@ class MarqueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=Auth::user();
+        $marque= Marque::find($id);
+        $marque->nom=$request->input('nom');
+        $marque->user_id=$user->id ;
+        $marque->save();
+        return redirect('/Marque');
+
     }
 
     /**

@@ -51,7 +51,7 @@ class ModeleController extends Controller
         }else {
             $modele = new Modele();
             $modele->modele = $request->input('modele');
-            $modele->marque = $request->input('marque');
+            $modele->marque_id = $request->input('marque');
             $modele->user_id = $user->id;
             $modele->save();
             return redirect('/Modele');

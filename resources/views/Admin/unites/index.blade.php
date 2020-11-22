@@ -3,28 +3,18 @@
 <body>
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="form-group">
+        <div class="row justify-content-center pt-lg-5">
 
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="optionSelect">Filtrer</label>
-                    </div>
-                    <select class="custom-select" id="optionSelect">
-                        <option value="1">Nom</option>
-                    </select>
-                    <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text" placeholder="Filtre">
-                </div>
-
-            </div>
             <div class="col-lg-12">
-                <div class="overflow-auto">
-                    <table class="table table-striped table-hover" id="tableP">
+                <div class="card elevation-3">
+                    <div class="card-body">
+                        <div class="overflow-auto">
+                            <table id="dTable" class="table table-bordered table-hover ">
                         <thead class="thead-dark">
                         <tr>
-                            <th onclick="sortTable(0)" scope="col">#</th>
-                            <th onclick="sortTable(1)" scope="col">Nom</th>
-                            <th onclick="sortTable(2)" scope="col">Wilaya</th>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Wilaya</th>
                             <th>Action</th>
 
 
@@ -44,6 +34,8 @@
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                        <a class="btn btn-primary btn-sm" href="/Unite/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
+
                                     </form>
 
                                 </td>
@@ -51,6 +43,8 @@
                         @endforeach
                         </tbody>
                     </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

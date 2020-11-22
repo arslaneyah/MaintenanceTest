@@ -21,19 +21,21 @@
 
             </div>
             <div class="col-lg-10">
-                <div class="overflow-auto">
-                    <table class="table table-striped" id="tableP">
+                <div class="card elevation-3">
+                    <div class="card-body">
+                        <div class="overflow-auto">
+                            <table id="dTable" class="table table-bordered table-hover ">
                         <thead class="thead-dark">
                         <tr>
-                            <th onclick="sortTable(0)" scope="col">#</th>
-                            <th onclick="sortTable(1)" scope="col">n°park</th>
-                            <th onclick="sortTable(2)" scope="col">n° chassis</th>
-                            <th onclick="sortTable(3)" scope="col">Matricule</th>
-                            <th onclick="sortTable(4)" scope="col">Modele</th>
-                            <th onclick="sortTable(5)" scope="col">Marque</th>
-                            <th onclick="sortTable(6)" scope="col">Année</th>
-                            <th onclick="sortTable(7)" scope="col">Unité</th>
-                            <th onclick="sortTable(8)" scope="col">Crée Par</th>
+                            <th>#</th>
+                            <th>n°park</th>
+                            <th >n° chassis</th>
+                            <th >Matricule</th>
+                            <th>Modele</th>
+                            <th>Marque</th>
+                            <th>Année</th>
+                            <th>Unité</th>
+                            <th >Crée Par</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -64,6 +66,8 @@
                         @endforeach
                         </tbody>
                     </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

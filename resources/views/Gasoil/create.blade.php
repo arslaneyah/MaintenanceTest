@@ -17,9 +17,7 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#bonessform">Bons d'essence</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#gasoilexcelform">Excel</a>
-                        </li>
+
                     </ul>
                     <div class="tab-content">
                         <div id="gasoilform" class="card-body container tab-pane active">
@@ -29,6 +27,11 @@
                                     <label for="km">Kilometrage</label>
                                     <input type="number" class="form-control" id="km" name="km" placeholder="km"
                                            required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="n_bon">n° Bon</label>
+                                    <input type="number" class="form-control" id="n_bon" name="n_bon" placeholder="n_bon"
+                                           required min="0">
                                 </div>
                                 <div class="form-group">
                                     <label for="gasoil">Gasoil</label>
@@ -119,7 +122,7 @@
                             </form>
                         </div>
 
-                        <div id="gasoilexcelform" class="card-body container tab-pane fade">
+                  <!--      <div id="gasoilexcelform" class="card-body container tab-pane fade">
                             <form method="POST" action="{{ route ('excelimport')}}" enctype="multipart/form-data">
                                 @csrf
 
@@ -135,7 +138,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>

@@ -70,7 +70,9 @@ class UniteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $unite=Unite::find($id);
+        $wilayas=Wilaya::all();
+        return view('Admin/unites/edit')->with('wilayas',$wilayas)->with('unite',$unite);
     }
 
     /**
@@ -82,7 +84,33 @@ class UniteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $unite=Unite::find($id);
+        if($id==$request->input('id')){
+
+            $unite->id= $request->input('id');
+            $unite->name= $request->input('nom');
+            $unite->wilaya_id= $request->input('wilaya');
+            $unite->save();
+            return redirect('/Unite');
+            Alert::success('Operation Conclue', 'Succés');
+            return redirect('/Unite');
+        }else{
+            if(is_null(Unite::find($request->input('id')))){
+
+                $unite->id= $request->input('id');
+                $unite->name= $request->input('nom');
+                $unite->wilaya_id= $request->input('wilaya');
+                $unite->save();
+                return redirect('/Unite');
+                Alert::success('Operation Conclue', 'Succés');
+                return redirect('/Unite');
+
+            }else{
+                Alert::error('Erreur','Id deja existant');
+                return redirect('/Unite/'.$id.'/edit');
+
+            }
+        }
     }
 
     /**
