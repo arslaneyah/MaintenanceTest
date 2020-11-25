@@ -91,7 +91,10 @@ class VehiculeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vehicule=Vehicule::find($id);
+        $modeles=Modele::all();
+        $unites=Unite::all();
+        return view('Admin/vehicules/edit_vehicule')->with('unites',$unites)->with('modeles',$modeles)->with('vehicule',$vehicule);
     }
 
     /**
@@ -103,7 +106,30 @@ class VehiculeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=Auth::user();
+        $vehicules=Vehicule::all()->except($id);
+        $vehicule=Vehicule::find($id);
+        if($vehicules->contains('n_park',$request->input('npark'))
+            || $vehicules->contains('n_chassis',$request->input('nchassis'))
+            || $vehicules->contains('matricule',$request->input('matricule')))
+        {
+            Alert::error('Vehicule Existant', 'Echec : veuillez verifier les informations introduites');
+            return redirect('/Vehicule/'.$id.'/edit');
+        }
+        else {
+
+            $vehicule->n_park = $request->input('npark');
+            $vehicule->n_chassis = $request->input('nchassis');
+            $vehicule->matricule = $request->input('matricule');
+            $vehicule->annee = $request->input('annee');
+            $vehicule->unite_id = $request->input('unite');
+            $vehicule->modele_id = $request->input('modele');
+            $vehicule->user_id = $user->id;
+            $vehicule->save();
+            Alert::success('Vehicule Modifié', 'Véhicule modifié avec succés');
+
+            return redirect('/Vehicule');
+        }
     }
 
     /**

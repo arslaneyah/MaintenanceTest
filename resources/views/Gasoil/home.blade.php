@@ -4,7 +4,7 @@
         <div class="row">
             @foreach($cuves as $item)
                 @if($item->quantite_gasoil<1000)
-                <div class="col-lg col-md-6">
+                <div class="col">
                     <!-- small box -->
                     <div class="small-box bg-gradient-danger">
                         <div class="inner">
@@ -72,27 +72,10 @@
 
         </div>
         <div class="row justify-content-center mb-1 ">
-            <div class="col-sm">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="optionSelect">Filtrer</label>
-                    </div>
-                    <select class="custom-select col" id="optionSelect">
-                        <option value="2">n° parc</option>
-                        <option value="3">Matricule</option>
-                        @if(Auth::user()->role=='admin')
-                            <option value="1">Unité</option>
-                        @endif
 
-                    </select>
-                    <input class="form-control" id="searchinput" onkeyup="search()" type="text"
-                           placeholder="Filtre">
-                </div>
-
-            </div>
             <form method="POST" action="/gasoilfilter">
                 @csrf
-                <div class="col">
+                <div class="col-sm">
                     <div class="input-group ">
 
                         <div class="input-group-prepend">
@@ -164,9 +147,11 @@
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm"><i
                                                     class="far fa-times-circle"></i></button>
+                                            <a class="btn btn-primary btn-sm" href="/Gasoil/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
+                                            <a class="btn btn-info btn-sm"  href="/Gasoil/pdfgasoil/{{$item->id}}" role="button"> <i class="fas fa-print"></i> </a>
+
                                         </form>
                                         @endif
-                                        <a class="btn btn-info btn-sm"  href="/Gasoil/pdfgasoil/{{$item->id}}"> <i class="fas fa-print"></i> </a>
                                     </td>
 
                             </tr>

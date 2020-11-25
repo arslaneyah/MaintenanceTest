@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : Dim 18 oct. 2020 à 14:45
+-- Généré le : Dim 22 nov. 2020 à 13:25
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.1
 
@@ -39,6 +39,13 @@ CREATE TABLE `alimentation_cuves` (
   `fournisseur_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `alimentation_cuves`
+--
+
+INSERT INTO `alimentation_cuves` (`id`, `cuve_id`, `date`, `quantite`, `user_id`, `created_at`, `updated_at`, `fournisseur_id`) VALUES
+(10, 4, '2020-11-02 08:30:00', 6000.00, 5, '2020-11-02 12:46:31', '2020-11-02 12:46:31', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -60,11 +67,11 @@ CREATE TABLE `cuves` (
 --
 
 INSERT INTO `cuves` (`id`, `nom`, `capacite`, `unite_id`, `quantite_gasoil`, `created_at`, `updated_at`) VALUES
-(1, 'Cuve Setif', 46000.00, 33, 44370.00, NULL, '2020-10-18 08:15:41'),
-(2, 'Cuve Biskra', 30000.00, 3307, 15000.00, NULL, '2020-09-07 13:17:22'),
-(3, 'Cuve Skikda', 60000.00, 37, 55000.00, NULL, '2020-10-12 06:45:27'),
-(4, 'Cuve DG Constantine', 8000.00, 3725, 6670.00, NULL, '2020-10-12 09:43:36'),
-(99, 'Autre', 999999.99, 3725, 999999.99, NULL, NULL);
+(1, 'Cuve Setif', 46000.00, 33, 0.00, NULL, '2020-11-19 11:56:10'),
+(2, 'Cuve Biskra', 30000.00, 3307, 0.00, NULL, '2020-09-07 13:17:22'),
+(3, 'Cuve Skikda', 60000.00, 37, 0.00, NULL, '2020-10-12 06:45:27'),
+(4, 'Cuve DG Constantine', 8000.00, 30, 2050.00, NULL, '2020-11-22 09:58:20'),
+(99, 'Autre', 999999.99, 30, 999999.99, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -90,7 +97,7 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `fournisseurs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prix` double(8,2) NOT NULL,
+  `prix` float(8,5) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `etat` tinyint(1) NOT NULL
@@ -101,7 +108,7 @@ CREATE TABLE `fournisseurs` (
 --
 
 INSERT INTO `fournisseurs` (`id`, `nom`, `prix`, `created_at`, `updated_at`, `etat`) VALUES
-(2, 'Naftal', 29.01, '2020-10-07 09:17:39', '2020-10-13 06:26:05', 1);
+(2, 'Naftal', 28.38174, '2020-10-07 09:17:39', '2020-10-13 06:26:05', 1);
 
 -- --------------------------------------------------------
 
@@ -117,39 +124,85 @@ CREATE TABLE `gasoils` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `cuve_id` bigint(20) UNSIGNED NOT NULL,
-  `type` int(11) NOT NULL
+  `type` int(11) NOT NULL,
+  `n_bon` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `gasoils`
 --
 
-INSERT INTO `gasoils` (`id`, `kilometrage_id`, `litres`, `fournisseur_id`, `created_at`, `updated_at`, `cuve_id`, `type`) VALUES
-(23, 31, 50.00, 2, '2020-10-11 13:02:41', '2020-10-11 13:02:41', 4, 1),
-(24, 32, 50.00, 2, '2020-10-12 09:40:23', '2020-10-12 09:40:23', 4, 1),
-(25, 33, 50.00, 2, '2020-10-12 09:43:36', '2020-10-12 09:43:36', 4, 1),
-(26, 35, 50.00, 2, '2020-10-13 07:02:00', '2020-10-13 07:02:00', 4, 1),
-(27, 36, 50.00, 2, '2020-10-13 11:14:54', '2020-10-13 11:14:54', 1, 1),
-(28, 37, 234.40, 2, '2020-10-13 12:16:39', '2020-10-13 12:16:39', 99, 2),
-(29, 38, 50.00, 2, '2020-10-15 07:20:07', '2020-10-15 07:20:07', 1, 1),
-(30, 39, 50.00, 2, '2020-10-15 07:21:47', '2020-10-15 07:21:47', 1, 1),
-(31, 40, 50.00, 2, '2020-10-15 07:25:23', '2020-10-15 07:25:23', 1, 1),
-(32, 41, 50.00, 2, '2020-10-15 07:26:51', '2020-10-15 07:26:51', 1, 1),
-(33, 42, 50.00, 2, '2020-10-15 07:30:04', '2020-10-15 07:30:04', 1, 1),
-(34, 43, 50.00, 2, '2020-10-15 07:31:07', '2020-10-15 07:31:07', 1, 1),
-(35, 44, 60.00, 2, '2020-10-15 07:32:09', '2020-10-15 07:32:09', 1, 1),
-(36, 52, 50.00, 2, '2020-10-15 10:54:16', '2020-10-15 10:54:16', 1, 1),
-(37, 53, 50.00, 2, '2020-10-15 11:38:07', '2020-10-15 11:38:07', 1, 1),
-(38, 54, 50.00, 2, '2020-10-15 12:21:22', '2020-10-15 12:21:22', 1, 1),
-(39, 55, 50.00, 2, '2020-10-15 12:32:00', '2020-10-15 12:32:00', 1, 1),
-(40, 57, 50.00, 2, '2020-10-18 07:04:34', '2020-10-18 07:04:34', 1, 1),
-(41, 58, 50.00, 2, '2020-10-18 07:05:10', '2020-10-18 07:05:10', 1, 1),
-(42, 59, 50.00, 2, '2020-10-18 07:08:02', '2020-10-18 07:08:02', 1, 1),
-(43, 60, 50.00, 2, '2020-10-18 07:09:40', '2020-10-18 07:09:40', 1, 1),
-(44, 61, 50.00, 2, '2020-10-18 07:49:58', '2020-10-18 07:49:58', 1, 1),
-(45, 61, 50.00, 2, '2020-10-18 07:52:41', '2020-10-18 07:52:41', 1, 1),
-(46, 62, 50.00, 2, '2020-10-18 08:06:07', '2020-10-18 08:06:07', 1, 1),
-(47, 62, 50.00, 2, '2020-10-18 08:15:41', '2020-10-18 08:15:41', 1, 1);
+INSERT INTO `gasoils` (`id`, `kilometrage_id`, `litres`, `fournisseur_id`, `created_at`, `updated_at`, `cuve_id`, `type`, `n_bon`) VALUES
+(2, 2, 63.00, 2, '2020-11-03 08:52:40', '2020-11-03 08:52:40', 4, 1, 4833),
+(3, 3, 44.00, 2, '2020-11-03 08:53:43', '2020-11-03 08:53:43', 4, 1, 4834),
+(4, 4, 64.00, 2, '2020-11-03 08:54:42', '2020-11-03 08:54:42', 4, 1, 4835),
+(5, 5, 60.00, 2, '2020-11-03 08:56:16', '2020-11-03 08:56:16', 4, 1, 4836),
+(6, 6, 60.00, 2, '2020-11-03 08:56:59', '2020-11-03 08:56:59', 4, 1, 4837),
+(7, 7, 51.00, 2, '2020-11-03 08:57:39', '2020-11-03 08:57:39', 4, 1, 4838),
+(8, 8, 71.00, 2, '2020-11-04 08:44:27', '2020-11-04 08:44:27', 4, 1, 4840),
+(9, 9, 20.00, 2, '2020-11-04 08:58:59', '2020-11-04 08:58:59', 4, 1, 4839),
+(10, 10, 53.00, 2, '2020-11-05 08:34:12', '2020-11-05 08:34:12', 4, 1, 4842),
+(11, 7, 39.00, 2, '2020-11-05 08:35:28', '2020-11-05 08:35:28', 4, 1, 4843),
+(12, 11, 62.00, 2, '2020-11-05 08:38:13', '2020-11-05 08:38:13', 4, 1, 4844),
+(13, 12, 59.00, 2, '2020-11-05 08:39:08', '2020-11-05 08:39:08', 4, 1, 4845),
+(14, 13, 72.00, 2, '2020-11-05 08:40:05', '2020-11-05 08:40:05', 4, 1, 4846),
+(15, 14, 59.00, 2, '2020-11-05 08:41:17', '2020-11-05 08:41:17', 4, 1, 4847),
+(16, 16, 41.00, 2, '2020-11-05 08:49:47', '2020-11-05 08:49:47', 4, 1, 4841),
+(18, 17, 54.00, 2, '2020-11-09 11:58:26', '2020-11-09 11:58:26', 4, 1, 4848),
+(19, 7, 59.00, 2, '2020-11-09 11:59:53', '2020-11-09 11:59:53', 4, 1, 4849),
+(20, 18, 68.00, 2, '2020-11-09 12:01:03', '2020-11-09 12:01:03', 4, 1, 4850),
+(21, 19, 47.00, 2, '2020-11-09 12:02:19', '2020-11-09 12:02:19', 4, 1, 4851),
+(22, 20, 62.00, 2, '2020-11-09 12:03:26', '2020-11-09 12:03:26', 4, 1, 4852),
+(23, 21, 62.00, 2, '2020-11-09 12:04:36', '2020-11-09 12:04:36', 4, 1, 4853),
+(24, 22, 60.00, 2, '2020-11-09 12:06:01', '2020-11-09 12:06:01', 4, 1, 4854),
+(25, 23, 40.00, 2, '2020-11-09 12:07:55', '2020-11-09 12:07:55', 4, 1, 4855),
+(26, 7, 42.00, 2, '2020-11-09 12:08:49', '2020-11-09 12:08:49', 4, 1, 4856),
+(27, 24, 59.00, 2, '2020-11-09 12:10:35', '2020-11-09 12:10:35', 4, 1, 4857),
+(28, 25, 42.00, 2, '2020-11-09 12:11:40', '2020-11-09 12:11:40', 4, 1, 4858),
+(29, 26, 51.00, 2, '2020-11-09 12:13:35', '2020-11-09 12:13:35', 4, 1, 4859),
+(30, 27, 62.00, 2, '2020-11-09 12:14:56', '2020-11-09 12:14:56', 4, 1, 4860),
+(31, 28, 66.00, 2, '2020-11-09 12:16:01', '2020-11-09 12:16:01', 4, 1, 4861),
+(32, 29, 48.00, 2, '2020-11-10 06:44:14', '2020-11-10 06:44:14', 4, 1, 4862),
+(33, 30, 65.00, 2, '2020-11-10 06:49:37', '2020-11-10 06:49:37', 4, 1, 4863),
+(34, 31, 73.00, 2, '2020-11-10 06:51:07', '2020-11-10 06:51:07', 4, 1, 4864),
+(35, 32, 60.00, 2, '2020-11-11 11:07:04', '2020-11-11 11:07:04', 4, 1, 4865),
+(36, 33, 63.00, 2, '2020-11-11 11:09:07', '2020-11-11 11:09:07', 4, 1, 4866),
+(37, 7, 53.00, 2, '2020-11-11 11:10:41', '2020-11-11 11:10:41', 4, 1, 4867),
+(38, 34, 77.00, 2, '2020-11-11 11:12:18', '2020-11-11 11:12:18', 4, 1, 4868),
+(39, 35, 72.00, 2, '2020-11-11 11:15:04', '2020-11-11 11:15:04', 4, 1, 4869),
+(40, 36, 47.00, 2, '2020-11-12 08:02:15', '2020-11-12 08:02:15', 4, 1, 4870),
+(41, 37, 39.00, 2, '2020-11-12 08:03:44', '2020-11-12 08:03:44', 4, 1, 4871),
+(42, 7, 51.00, 2, '2020-11-15 09:34:47', '2020-11-15 09:34:47', 4, 1, 4872),
+(43, 38, 49.00, 2, '2020-11-15 09:35:41', '2020-11-15 09:35:41', 4, 1, 4873),
+(44, 39, 63.00, 2, '2020-11-15 09:36:48', '2020-11-15 09:36:48', 4, 1, 4874),
+(45, 40, 64.00, 2, '2020-11-15 09:37:45', '2020-11-15 09:37:45', 4, 1, 4875),
+(46, 41, 68.00, 2, '2020-11-15 09:39:55', '2020-11-15 09:39:55', 4, 1, 4876),
+(47, 42, 33.00, 2, '2020-11-15 09:41:02', '2020-11-15 09:41:02', 4, 1, 4877),
+(48, 43, 64.00, 2, '2020-11-15 09:42:10', '2020-11-15 09:42:10', 4, 1, 4878),
+(49, 7, 44.00, 2, '2020-11-15 09:43:07', '2020-11-15 09:43:07', 4, 1, 4879),
+(50, 44, 54.00, 2, '2020-11-15 09:44:03', '2020-11-15 09:44:03', 4, 1, 4880),
+(51, 45, 57.00, 2, '2020-11-15 09:45:00', '2020-11-15 09:45:00', 4, 1, 4881),
+(52, 47, 51.00, 2, '2020-11-16 12:17:33', '2020-11-16 12:17:33', 4, 1, 4882),
+(53, 48, 51.00, 2, '2020-11-19 12:18:11', '2020-11-19 12:18:11', 4, 1, 4883),
+(54, 49, 64.00, 2, '2020-11-19 12:20:14', '2020-11-19 12:20:14', 4, 1, 4884),
+(55, 50, 55.00, 2, '2020-11-19 12:21:18', '2020-11-19 12:21:18', 4, 1, 4885),
+(56, 51, 44.00, 2, '2020-11-19 12:22:19', '2020-11-19 12:22:19', 4, 1, 4886),
+(57, 52, 68.00, 2, '2020-11-19 12:23:31', '2020-11-19 12:23:31', 4, 1, 4887),
+(58, 53, 45.00, 2, '2020-11-19 12:24:43', '2020-11-19 12:24:43', 4, 1, 4888),
+(59, 54, 59.00, 2, '2020-11-19 12:26:08', '2020-11-19 12:26:08', 4, 1, 4889),
+(60, 55, 58.00, 2, '2020-11-19 12:27:47', '2020-11-19 12:27:47', 4, 1, 4890),
+(61, 56, 63.00, 2, '2020-11-19 12:30:19', '2020-11-19 12:30:19', 4, 1, 4891),
+(62, 57, 51.00, 2, '2020-11-19 12:31:35', '2020-11-19 12:31:35', 4, 1, 48892),
+(63, 58, 56.00, 2, '2020-11-19 12:33:40', '2020-11-19 12:33:40', 4, 1, 4893),
+(64, 59, 55.00, 2, '2020-11-19 12:35:07', '2020-11-19 12:35:07', 4, 1, 4894),
+(65, 60, 43.00, 2, '2020-11-19 12:37:12', '2020-11-19 12:37:12', 4, 1, 4895),
+(66, 61, 69.00, 2, '2020-11-19 12:53:50', '2020-11-19 12:53:50', 4, 1, 4896),
+(67, 62, 60.00, 2, '2020-11-22 09:52:52', '2020-11-22 09:52:52', 4, 1, 4897),
+(68, 63, 68.00, 2, '2020-11-22 09:53:57', '2020-11-22 09:53:57', 4, 1, 4898),
+(69, 64, 54.00, 2, '2020-11-22 09:55:03', '2020-11-22 09:55:03', 4, 1, 4899),
+(70, 65, 41.00, 2, '2020-11-22 09:55:52', '2020-11-22 09:55:52', 4, 1, 4900),
+(71, 66, 40.00, 2, '2020-11-22 09:57:15', '2020-11-22 09:57:15', 4, 1, 4901),
+(72, 67, 68.00, 2, '2020-11-22 09:58:20', '2020-11-22 09:58:20', 4, 1, 4902);
 
 -- --------------------------------------------------------
 
@@ -172,36 +225,71 @@ CREATE TABLE `kilometrages` (
 --
 
 INSERT INTO `kilometrages` (`id`, `created_at`, `updated_at`, `date`, `dernier_km`, `user_id`, `vehicule_id`) VALUES
-(29, '2020-10-11 12:57:27', '2020-10-11 12:57:27', '2020-10-01 14:57:00', 25000, 3, 93),
-(30, '2020-10-11 12:58:05', '2020-10-11 12:58:05', '2020-09-01 14:57:00', 26000, 3, 72),
-(31, '2020-10-11 13:02:41', '2020-10-11 13:02:41', '2020-10-11 15:02:00', 25400, 3, 93),
-(32, '2020-10-12 09:40:22', '2020-10-12 09:40:22', '2020-09-01 11:39:00', 21000, 1, 93),
-(33, '2020-10-12 09:43:36', '2020-10-12 09:43:36', '2020-10-10 11:43:00', 25000, 1, 93),
-(35, '2020-10-13 07:02:00', '2020-10-13 07:02:00', '2020-10-13 00:00:00', 26200, 1, 113),
-(36, '2020-10-13 11:14:54', '2020-10-13 11:14:54', '2020-10-13 13:14:00', 26400, 2, 113),
-(37, '2020-10-13 12:16:39', '2020-10-13 12:16:39', '2020-10-14 14:16:00', 27400, 2, 113),
-(38, '2020-10-15 07:20:06', '2020-10-15 07:20:06', '2020-10-15 09:20:00', 27000, 1, 28),
-(39, '2020-10-15 07:21:47', '2020-10-15 07:21:47', '2020-10-16 09:21:00', 27400, 1, 28),
-(40, '2020-10-15 07:25:22', '2020-10-15 07:25:22', '2020-10-17 09:25:00', 27800, 1, 28),
-(41, '2020-10-15 07:26:51', '2020-10-15 07:26:51', '2020-10-20 09:26:00', 28200, 1, 28),
-(42, '2020-10-15 07:30:04', '2020-10-15 07:30:04', '2020-10-30 09:29:00', 26000, 1, 30),
-(43, '2020-10-15 07:31:07', '2020-10-15 07:31:07', '2020-10-01 09:30:00', 28000, 1, 117),
-(44, '2020-10-15 07:32:09', '2020-10-15 07:32:09', '2020-10-15 09:31:00', 25000, 1, 102),
-(46, '2020-10-15 07:54:48', '2020-10-15 07:54:48', '2020-10-15 09:54:00', 29000, 1, 28),
-(47, '2020-10-15 07:55:54', '2020-10-15 07:55:54', '2020-10-15 09:54:00', 29000, 1, 28),
-(48, '2020-10-15 08:36:26', '2020-10-15 08:36:26', '2020-10-15 09:54:00', 29000, 1, 28),
-(49, '2020-10-15 08:37:18', '2020-10-15 08:37:18', '2020-10-15 09:54:00', 29000, 1, 28),
-(50, '2020-10-15 08:38:52', '2020-10-15 08:38:52', '2020-10-15 09:54:00', 29000, 1, 28),
-(52, '2020-10-15 10:54:15', '2020-10-15 10:54:15', '2020-10-15 12:54:00', 25000, 1, 78),
-(53, '2020-10-15 11:38:06', '2020-10-15 11:38:06', '2020-10-15 13:37:00', 21000, 1, 66),
-(54, '2020-10-15 12:21:22', '2020-10-15 12:21:22', '2020-10-31 14:21:00', 26500, 1, 30),
-(55, '2020-10-15 12:32:00', '2020-10-15 12:32:00', '2020-11-01 14:31:00', 26600, 1, 30),
-(57, '2020-10-18 07:04:34', '2020-10-18 07:04:34', '2020-11-02 09:04:00', 26700, 1, 30),
-(58, '2020-10-18 07:05:09', '2020-10-18 07:05:09', '2020-11-02 09:05:00', 26800, 1, 30),
-(59, '2020-10-18 07:08:02', '2020-10-18 07:08:02', '2020-11-02 09:07:00', 26900, 1, 30),
-(60, '2020-10-18 07:09:40', '2020-10-18 07:09:40', '2020-11-03 09:09:00', 27000, 1, 30),
-(61, '2020-10-18 07:49:58', '2020-10-18 07:49:58', '2020-11-04 09:49:00', 27500, 1, 30),
-(62, '2020-10-18 08:06:07', '2020-10-18 08:06:07', '2020-11-04 10:49:00', 27600, 1, 30);
+(2, '2020-11-03 08:52:40', '2020-11-03 08:52:40', '2020-11-02 16:00:00', 52890, 5, 53),
+(3, '2020-11-03 08:53:42', '2020-11-03 08:53:42', '2020-11-02 16:00:00', 225042, 5, 89),
+(4, '2020-11-03 08:54:42', '2020-11-03 08:54:42', '2020-11-02 16:30:00', 22757, 5, 52),
+(5, '2020-11-03 08:56:16', '2020-11-03 08:56:16', '2020-11-02 16:30:00', 36221, 5, 58),
+(6, '2020-11-03 08:56:59', '2020-11-03 08:56:59', '2020-11-02 16:00:00', 228995, 5, 90),
+(7, '2020-11-03 08:57:39', '2020-11-03 08:57:39', '2020-11-02 21:00:00', 268597, 5, 93),
+(8, '2020-11-04 08:44:27', '2020-11-04 08:44:27', '2020-11-03 10:00:00', 305713, 5, 92),
+(9, '2020-11-04 08:58:59', '2020-11-04 08:58:59', '2020-11-03 06:50:00', 379264, 5, 131),
+(10, '2020-11-05 08:34:11', '2020-11-05 08:34:11', '2020-11-04 15:30:00', 229592, 5, 90),
+(11, '2020-11-05 08:38:13', '2020-11-05 08:38:13', '2020-11-04 15:45:00', 290735, 5, 88),
+(12, '2020-11-05 08:39:07', '2020-11-05 08:39:07', '2020-11-04 15:55:00', 53390, 5, 53),
+(13, '2020-11-05 08:40:05', '2020-11-05 08:40:05', '2020-11-04 16:20:00', 239203, 5, 91),
+(14, '2020-11-05 08:41:16', '2020-11-05 08:41:16', '2020-11-04 16:25:00', 225435, 5, 89),
+(15, '2020-11-05 08:49:47', '2020-11-05 08:49:47', '2020-11-04 11:30:00', 365401, 5, 132),
+(16, '2020-11-05 08:49:47', '2020-11-05 08:49:47', '2020-11-04 11:30:00', 365401, 5, 132),
+(17, '2020-11-09 11:58:25', '2020-11-09 11:58:25', '2020-11-05 15:00:00', 36697, 5, 58),
+(18, '2020-11-09 12:01:03', '2020-11-09 12:01:03', '2020-11-06 17:30:00', 225897, 5, 89),
+(19, '2020-11-09 12:02:19', '2020-11-09 12:02:19', '2020-11-06 17:40:00', 53809, 5, 53),
+(20, '2020-11-09 12:03:26', '2020-11-09 12:03:26', '2020-11-06 18:30:00', 230120, 5, 90),
+(21, '2020-11-09 12:04:36', '2020-11-09 12:04:36', '2020-11-06 18:40:00', 23239, 5, 52),
+(22, '2020-11-09 12:06:00', '2020-11-09 12:06:00', '2020-11-07 16:55:00', 306272, 5, 92),
+(23, '2020-11-09 12:07:55', '2020-11-09 12:07:55', '2020-11-08 10:45:00', 366133, 5, 132),
+(24, '2020-11-09 12:10:35', '2020-11-09 12:10:35', '2020-11-08 16:10:00', 239679, 5, 91),
+(25, '2020-11-09 12:11:40', '2020-11-09 12:11:40', '2020-11-08 16:15:00', 226187, 5, 89),
+(26, '2020-11-09 12:13:34', '2020-11-09 12:13:34', '2020-11-08 16:45:00', 381182, 5, 131),
+(27, '2020-11-09 12:14:56', '2020-11-09 12:14:56', '2020-11-08 20:20:00', 291330, 5, 88),
+(28, '2020-11-09 12:16:01', '2020-11-09 12:16:01', '2020-11-08 20:45:00', 230756, 5, 90),
+(29, '2020-11-10 06:44:13', '2020-11-10 06:44:13', '2020-11-09 12:30:00', 172276, 5, 134),
+(30, '2020-11-10 06:49:37', '2020-11-10 06:49:37', '2020-11-09 19:00:00', 54393, 5, 53),
+(31, '2020-11-10 06:51:07', '2020-11-10 06:51:07', '2020-11-10 06:10:00', 306880, 5, 92),
+(32, '2020-11-11 11:07:04', '2020-11-11 11:07:04', '2020-11-10 15:45:00', 23749, 5, 52),
+(33, '2020-11-11 11:09:07', '2020-11-11 11:09:07', '2020-11-10 15:50:00', 37218, 5, 58),
+(34, '2020-11-11 11:12:18', '2020-11-11 11:12:18', '2020-11-10 16:15:00', 226703, 5, 89),
+(35, '2020-11-11 11:15:04', '2020-11-11 11:15:04', '2020-11-10 21:25:00', 231440, 5, 90),
+(36, '2020-11-12 08:02:15', '2020-11-12 08:02:15', '2020-11-11 15:45:00', 54803, 5, 53),
+(37, '2020-11-12 08:03:43', '2020-11-12 08:03:43', '2020-11-12 09:30:00', 366856, 5, 132),
+(38, '2020-11-15 09:35:41', '2020-11-15 09:35:41', '2020-11-12 15:15:00', 231876, 5, 90),
+(39, '2020-11-15 09:36:48', '2020-11-15 09:36:48', '2020-11-12 16:00:00', 227090, 5, 89),
+(40, '2020-11-15 09:37:45', '2020-11-15 09:37:45', '2020-11-12 16:10:00', 307399, 5, 92),
+(41, '2020-11-15 09:39:55', '2020-11-15 09:39:55', '2020-11-13 12:15:00', 291954, 5, 88),
+(42, '2020-11-15 09:41:01', '2020-11-15 09:41:01', '2020-11-14 11:00:00', 232176, 5, 90),
+(43, '2020-11-15 09:42:09', '2020-11-15 09:42:09', '2020-11-14 12:30:00', 240241, 5, 91),
+(44, '2020-11-15 09:44:03', '2020-11-15 09:44:03', '2020-11-14 17:30:00', 55277, 5, 53),
+(45, '2020-11-15 09:45:00', '2020-11-15 09:45:00', '2020-11-14 18:45:00', 37689, 5, 58),
+(47, '2020-11-16 12:17:33', '2020-11-16 12:17:33', '2020-11-15 08:00:00', 307836, 1, 92),
+(48, '2020-11-19 12:18:11', '2020-11-19 12:18:11', '2020-11-15 16:15:00', 383205, 5, 131),
+(49, '2020-11-19 12:20:14', '2020-11-19 12:20:14', '2020-11-15 16:20:00', 227503, 5, 89),
+(50, '2020-11-19 12:21:18', '2020-11-19 12:21:18', '2020-11-15 18:30:00', 24204, 5, 52),
+(51, '2020-11-19 12:22:19', '2020-11-19 12:22:19', '2020-11-16 18:40:00', 367696, 5, 132),
+(52, '2020-11-19 12:23:31', '2020-11-19 12:23:31', '2020-11-16 15:35:00', 232826, 5, 90),
+(53, '2020-11-19 12:24:43', '2020-11-19 12:24:43', '2020-11-16 16:00:00', 268597, 5, 93),
+(54, '2020-11-19 12:26:08', '2020-11-19 12:26:08', '2020-11-17 16:10:00', 227880, 5, 89),
+(55, '2020-11-19 12:27:47', '2020-11-19 12:27:47', '2020-11-17 16:20:00', 55786, 5, 53),
+(56, '2020-11-19 12:30:19', '2020-11-19 12:30:19', '2020-11-17 16:30:00', 308367, 5, 92),
+(57, '2020-11-19 12:31:35', '2020-11-19 12:31:35', '2020-11-17 18:30:00', 292450, 5, 88),
+(58, '2020-11-19 12:33:40', '2020-11-19 12:33:40', '2020-11-18 08:30:00', 38154, 5, 58),
+(59, '2020-11-19 12:35:07', '2020-11-19 12:35:07', '2020-11-18 18:35:00', 233325, 5, 90),
+(60, '2020-11-19 12:37:12', '2020-11-19 12:37:12', '2020-11-18 16:40:00', 24540, 5, 52),
+(61, '2020-11-19 12:53:50', '2020-11-19 12:53:50', '2020-11-19 07:50:00', 228364, 5, 89),
+(62, '2020-11-22 09:52:52', '2020-11-22 09:52:52', '2020-11-19 16:00:00', 240747, 5, 91),
+(63, '2020-11-22 09:53:57', '2020-11-22 09:53:57', '2020-11-20 14:50:00', 56369, 5, 53),
+(64, '2020-11-22 09:55:03', '2020-11-22 09:55:03', '2020-11-20 15:30:00', 292925, 5, 88),
+(65, '2020-11-22 09:55:52', '2020-11-22 09:55:52', '2020-11-20 17:20:00', 368413, 5, 132),
+(66, '2020-11-22 09:57:14', '2020-11-22 09:57:14', '2020-11-21 17:35:00', 383839, 5, 131),
+(67, '2020-11-22 09:58:20', '2020-11-22 09:58:20', '2020-11-21 18:50:00', 260548, 5, 94);
 
 -- --------------------------------------------------------
 
@@ -228,7 +316,10 @@ INSERT INTO `marques` (`id`, `nom`, `user_id`, `created_at`, `updated_at`) VALUE
 (4, 'Toyota', 1, NULL, NULL),
 (5, 'Mercedes Benz', 1, NULL, NULL),
 (6, 'Vanhool', 1, NULL, NULL),
-(7, 'Nissan', 3, '2020-10-08 06:48:13', '2020-10-08 06:48:13');
+(9, 'Renault', 1, '2020-11-03 08:58:53', '2020-11-03 08:58:53'),
+(10, 'Citroen', 1, '2020-11-03 08:59:08', '2020-11-03 08:59:08'),
+(11, 'Skoda', 1, '2020-11-03 08:59:19', '2020-11-03 08:59:19'),
+(13, 'Buggati', 1, '2020-11-22 11:01:15', '2020-11-22 11:01:15');
 
 -- --------------------------------------------------------
 
@@ -274,7 +365,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (47, '2020_09_27_135829_add_type_to_gasoils', 15),
 (48, '2020_10_05_072856_add_vehicule_id_to_kilometrages', 16),
 (50, '2020_10_06_090218_add_unite_id_to_users', 17),
-(51, '2020_10_12_131449_add_is_active_to_users', 18);
+(51, '2020_10_12_131449_add_is_active_to_users', 18),
+(52, '2020_11_16_072141_add_n_bon_to_gasoils', 19);
 
 -- --------------------------------------------------------
 
@@ -309,7 +401,12 @@ INSERT INTO `modeles` (`id`, `modele`, `marque_id`, `user_id`, `created_at`, `up
 (11, 'Sprinter', 5, 1, NULL, NULL),
 (12, 'T815', 6, 1, NULL, NULL),
 (13, 'T915', 6, 1, NULL, NULL),
-(14, 'T915GLS', 6, 1, NULL, NULL);
+(14, 'T915GLS', 6, 1, NULL, NULL),
+(15, 'Mégane', 9, 1, '2020-11-03 09:07:18', '2020-11-03 09:07:18'),
+(16, 'Octavia', 11, 1, '2020-11-03 09:07:53', '2020-11-03 09:07:53'),
+(17, 'Berlingo', 10, 1, '2020-11-03 09:08:13', '2020-11-03 09:08:13'),
+(18, 'C-élysée', 10, 1, '2020-11-03 09:08:44', '2020-11-03 09:08:44'),
+(19, 'Accent-RB', 1, 1, '2020-11-03 09:40:46', '2020-11-03 09:40:46');
 
 -- --------------------------------------------------------
 
@@ -349,12 +446,12 @@ CREATE TABLE `unites` (
 --
 
 INSERT INTO `unites` (`id`, `name`, `created_at`, `updated_at`, `wilaya_id`) VALUES
+(30, 'Unite 30 -DG Constantine-', NULL, '2020-11-19 13:28:15', 25),
 (33, 'Unite 33', NULL, NULL, 19),
 (37, 'Unite 37', NULL, NULL, 21),
 (3307, 'Unite 33 -Biskra-', NULL, NULL, 7),
 (3330, 'Unite 33 -Ouargla-', NULL, NULL, 30),
-(3723, 'Unite 37 -Annaba-', NULL, NULL, 23),
-(3725, 'Unite 37 -DG Constantine-', NULL, NULL, 25);
+(3723, 'Unite 37 -Annaba-', NULL, NULL, 23);
 
 -- --------------------------------------------------------
 
@@ -382,10 +479,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `created_by`, `role`, `unite_id`, `is_active`) VALUES
-(1, 'Yahiouche Arslane', 'yahiouchearslane97@gmail.com', NULL, '$2y$10$eNLJjXbXBnm6wK6k4nlpPOM0kecykyQDBy7cEQHTer9I.vUcB/IgC', NULL, NULL, NULL, 1, 'admin', 3725, 1),
+(1, 'Yahiouche Arslane', 'yahiouchearslane97@gmail.com', NULL, '$2y$10$eNLJjXbXBnm6wK6k4nlpPOM0kecykyQDBy7cEQHTer9I.vUcB/IgC', NULL, NULL, NULL, 1, 'admin', 30, 1),
 (2, 'Agent Setif', 'agentsetif@mail.com', NULL, '$2y$10$DjuIGXMhmZvIt8utyvUsm.ivMSvHX2QMWZqN652qA3UgVFtE9vFxO', NULL, NULL, NULL, 1, 'agent', 33, 1),
-(3, 'esma', 'esma@mail.com', NULL, '$2y$10$xTH2.b30bBBx8pqr4gjCGOBp26B07NxMGq/ZTC5fOGeEAo3TWrhBy', NULL, '2020-10-07 08:39:14', '2020-10-07 08:39:14', 1, 'supervisor', 3725, 1),
-(4, 'kamel', 'kamel@mail.com', NULL, '$2y$10$c4JanluC06Fjl.hjpSWRCu45eupQeYk.mIEfaGxjYPrpP9o5TW7iO', NULL, '2020-10-07 08:41:09', '2020-10-07 08:41:09', 1, 'admin', 3725, 1);
+(3, 'esma', 'esma@mail.com', NULL, '$2y$10$xTH2.b30bBBx8pqr4gjCGOBp26B07NxMGq/ZTC5fOGeEAo3TWrhBy', NULL, '2020-10-07 08:39:14', '2020-10-07 08:39:14', 1, 'supervisor', 30, 1),
+(4, 'kamel', 'kamel@mail.com', NULL, '$2y$10$c4JanluC06Fjl.hjpSWRCu45eupQeYk.mIEfaGxjYPrpP9o5TW7iO', NULL, '2020-10-07 08:41:09', '2020-10-07 08:41:09', 1, 'admin', 30, 1),
+(5, 'Agent Constantine', 'dcmm_tve@yahoo.fr', NULL, '$2y$10$3JjB2BTnwtsihL8wFChcvOYQjrlOl4rhPnKtLZUxkaPoiYj4XfXXW', 'd5duXKQDyDrexaKuWtT36r0O4b63ZUKyuy4q7N15Q1jrFkjtxSvtboPEzgCP', '2020-10-27 07:28:48', '2020-10-27 07:28:48', 1, 'agent', 30, 1);
 
 -- --------------------------------------------------------
 
@@ -540,7 +638,11 @@ INSERT INTO `vehicules` (`id`, `n_park`, `n_chassis`, `matricule`, `modele_id`, 
 (127, '7209', 'D55737', '00032-415-07', 13, 33, 2015, NULL, NULL, 1),
 (128, '19210', 'D55743', '15304-415-19', 14, 33, 2015, NULL, NULL, 1),
 (129, '21209', 'D55745', '05122-415-21', 14, 37, 2015, NULL, NULL, 1),
-(130, '21210', 'D55746', '05121-415-21', 14, 37, 2015, NULL, NULL, 1);
+(130, '21210', 'D55746', '05121-415-21', 14, 37, 2015, NULL, NULL, 1),
+(131, '13729-112-25', 'VF1BZAK0647720901', '13729-112-25', 15, 30, 2012, '2020-11-03 09:21:34', '2020-11-03 09:21:34', 1),
+(132, '08548-115-25', 'VF7DD9HJCFJ596694', '08548-115-25', 18, 30, 2015, '2020-11-03 09:29:02', '2020-11-03 09:29:02', 1),
+(133, '192188-00-16', 'KMHCT441BAHU181636', '192188-00-16', 19, 30, 2015, '2020-11-03 09:39:10', '2020-11-03 09:39:10', 1),
+(134, '02892-114-21', 'VF7GJWJYBDX507246', '02892-114-21', 17, 30, 2015, '2020-11-03 09:40:28', '2020-11-03 09:40:28', 1);
 
 -- --------------------------------------------------------
 
@@ -619,8 +721,8 @@ INSERT INTO `wilayas` (`id`, `name`, `created_at`, `updated_at`) VALUES
 ALTER TABLE `alimentation_cuves`
   ADD PRIMARY KEY (`id`),
   ADD KEY `alimentation_cuves_cuve_id_foreign` (`cuve_id`),
-  ADD KEY `alimentation_cuves_user_id_foreign` (`user_id`),
-  ADD KEY `alimentation_cuves_fournisseur_id_foreign` (`fournisseur_id`);
+  ADD KEY `alimentation_cuves_fournisseur_id_foreign` (`fournisseur_id`),
+  ADD KEY `alimentation_cuves_user_id_foreign` (`user_id`);
 
 --
 -- Index pour la table `cuves`
@@ -646,9 +748,9 @@ ALTER TABLE `fournisseurs`
 --
 ALTER TABLE `gasoils`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `gasoils_kilometrage_id_foreign` (`kilometrage_id`),
+  ADD KEY `gasoils_cuve_id_foreign` (`cuve_id`),
   ADD KEY `gasoils_fournisseur_id_foreign` (`fournisseur_id`),
-  ADD KEY `gasoils_cuve_id_foreign` (`cuve_id`);
+  ADD KEY `gasoils_kilometrage_id_foreign` (`kilometrage_id`);
 
 --
 -- Index pour la table `kilometrages`
@@ -706,9 +808,9 @@ ALTER TABLE `users`
 --
 ALTER TABLE `vehicules`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicules_modele_id_foreign` (`modele_id`),
   ADD KEY `vehicules_unite_id_foreign` (`unite_id`),
-  ADD KEY `vehicules_user_id_foreign` (`user_id`),
-  ADD KEY `vehicules_modele_id_foreign` (`modele_id`);
+  ADD KEY `vehicules_user_id_foreign` (`user_id`);
 
 --
 -- Index pour la table `wilayas`
@@ -724,7 +826,7 @@ ALTER TABLE `wilayas`
 -- AUTO_INCREMENT pour la table `alimentation_cuves`
 --
 ALTER TABLE `alimentation_cuves`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `cuves`
@@ -748,31 +850,31 @@ ALTER TABLE `fournisseurs`
 -- AUTO_INCREMENT pour la table `gasoils`
 --
 ALTER TABLE `gasoils`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT pour la table `kilometrages`
 --
 ALTER TABLE `kilometrages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT pour la table `marques`
 --
 ALTER TABLE `marques`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT pour la table `modeles`
 --
 ALTER TABLE `modeles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pour la table `unites`
@@ -784,13 +886,13 @@ ALTER TABLE `unites`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19204;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT pour la table `wilayas`
@@ -806,30 +908,30 @@ ALTER TABLE `wilayas`
 -- Contraintes pour la table `alimentation_cuves`
 --
 ALTER TABLE `alimentation_cuves`
-  ADD CONSTRAINT `alimentation_cuves_cuve_id_foreign` FOREIGN KEY (`cuve_id`) REFERENCES `cuves` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `alimentation_cuves_fournisseur_id_foreign` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseurs` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `alimentation_cuves_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `alimentation_cuves_cuve_id_foreign` FOREIGN KEY (`cuve_id`) REFERENCES `cuves` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alimentation_cuves_fournisseur_id_foreign` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alimentation_cuves_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `cuves`
 --
 ALTER TABLE `cuves`
-  ADD CONSTRAINT `cuves_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `cuves_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `gasoils`
 --
 ALTER TABLE `gasoils`
-  ADD CONSTRAINT `gasoils_cuve_id_foreign` FOREIGN KEY (`cuve_id`) REFERENCES `cuves` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `gasoils_fournisseur_id_foreign` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseurs` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `gasoils_kilometrage_id_foreign` FOREIGN KEY (`kilometrage_id`) REFERENCES `kilometrages` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `gasoils_cuve_id_foreign` FOREIGN KEY (`cuve_id`) REFERENCES `cuves` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `gasoils_fournisseur_id_foreign` FOREIGN KEY (`fournisseur_id`) REFERENCES `fournisseurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `gasoils_kilometrage_id_foreign` FOREIGN KEY (`kilometrage_id`) REFERENCES `kilometrages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `kilometrages`
 --
 ALTER TABLE `kilometrages`
-  ADD CONSTRAINT `kilometrages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `kilometrages_vehicule_id_foreign` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicules` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `kilometrages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `kilometrages_vehicule_id_foreign` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `marques`
@@ -841,28 +943,28 @@ ALTER TABLE `marques`
 -- Contraintes pour la table `modeles`
 --
 ALTER TABLE `modeles`
-  ADD CONSTRAINT `modeles_marque_id_foreign` FOREIGN KEY (`marque_id`) REFERENCES `marques` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `modeles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `modeles_marque_id_foreign` FOREIGN KEY (`marque_id`) REFERENCES `marques` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `modeles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `unites`
 --
 ALTER TABLE `unites`
-  ADD CONSTRAINT `unites_wilaya_id_foreign` FOREIGN KEY (`wilaya_id`) REFERENCES `wilayas` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `unites_wilaya_id_foreign` FOREIGN KEY (`wilaya_id`) REFERENCES `wilayas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `users_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
-  ADD CONSTRAINT `vehicules_modele_id_foreign` FOREIGN KEY (`modele_id`) REFERENCES `modeles` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `vehicules_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `vehicules_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `vehicules_modele_id_foreign` FOREIGN KEY (`modele_id`) REFERENCES `modeles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vehicules_unite_id_foreign` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vehicules_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

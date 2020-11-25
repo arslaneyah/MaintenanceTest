@@ -1,46 +1,59 @@
-@extends('layouts/app')
-<html>
-<head>
-    <title>Maintenance Tve @yield('title')</title>
-</head>
-<body>
+@extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Suivie Kilometrage</div>
+
+
+        <div class="row justify-content-center mt-lg-5">
+            <div class="col-lg-12">
+                <div class="card elevation-3">
                     <div class="card-body">
-                        <form method="POST" action="/Vgasoil">
-                            @csrf
-                            <div class="form-group">
-                                <label for="date">Date de début</label>
-                                <input type="datetime-local" class="form-control" id="datemin" name="datemin" placeholder="date de Début" required>
-                            </div>
+                        <div class="overflow-auto">
+                            <table id="dTable" class="table table-bordered table-hover ">
+                                <thead >
+                                <tr>
+                                    <th >#</th>
+                                    <th>n° Parc</th>
+                                    <th >Matricule</th>
+                                    <th>Kilometrage</th>
+                                    <th>Date</th>
+                                    <th>Agent</th>
+                                    <th>Action</th>
 
-                            <div class="form-group">
-                                <label for="date">Date de fin</label>
-                                <input type="datetime-local" class="form-control" id="datemax" name="datemax" placeholder="date de Fin" required>
-                            </div>
+                                </tr>
+                                </thead>
 
-                            <div class="form-group">
-                                <span class="form-label">Vehicule</span>
-                                <select name="vehicule" class="custom-select custom-select-lg mb-3">
-                                    @foreach ($vehicules as $item )
-                                        <option value={{$item->id}}>{{$item->n_park}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Valider</button>
-                        </form>
+                                <tbody id="table">
+
+                                @foreach ($kilometrages as $item)
+                                    <tr>
+                                        <td>{{$item->id}}</td>
+                                        <td>{{$item->vehicule->n_park}}</td>
+                                        <td>{{$item->vehicule->matricule}}</td>
+                                        <td>{{$item->dernier_km}}</td>
+                                        <td>{{$item->date}}</td>
+                                        <td>{{$item->user->name}}</td>
+                                        <td>
+                                            @if(Auth::user()->role== 'admin')
+                                                <form method="post" action="/Kilometrage/{{$item->id}}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                                    <a class="btn btn-primary btn-sm" href="/Kilometrage/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
+                                                </form>
+                                            @endif
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
+                <button type="button" class="btn btn-success" id="buttonexcel">Excel</button>
             </div>
         </div>
     </div>
-
 @endsection
-</body>
 
-</html>
+

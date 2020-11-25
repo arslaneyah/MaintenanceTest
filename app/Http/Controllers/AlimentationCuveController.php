@@ -33,9 +33,6 @@ class AlimentationCuveController extends Controller
             $cuves = Cuve::all();
             $cuves = $cuves->except(99);
 
-
-
-
         } else {
             $unite = $user->unite_id;
             $alimcuve = Alimentation_Cuve::join('cuves', 'cuve_id', 'cuves.id')
@@ -122,7 +119,11 @@ class AlimentationCuveController extends Controller
      */
     public function edit($id)
     {
-        //
+        $alimcuve = Alimentation_Cuve::find($id);
+        $cuves = Cuve::All();
+        $cuves = $cuves->except(99);
+        $fournisseur = Fournisseur::where('etat', 1)->get();
+        return view('AlimentationCuve/edit')->with('cuves', $cuves)->with('fournisseurs', $fournisseur)->with('alimcuve',$alimcuve);
     }
 
     /**
@@ -134,7 +135,27 @@ class AlimentationCuveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        {
+
+            $alimcuve =Alimentation_Cuve::find($id);
+            $cuve = Cuve::where('id', $request->input('cuve'))->first();
+            if ($request->input("quantite") > ($cuve->capacite) - ($cuve->quantite_gasoil - $alimcuve->quantite)) {
+                Alert::error('Erreur Quantite Gasoil ', 'Echec : Quantité Gasoil supérieur à la capacité de la cuve');
+                return redirect('/Alimentation_Cuve/'.$id.'/edit');
+            } else {
+                $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($alimcuve->quantite);
+                $alimcuve->quantite = $request->input('quantite');
+                $alimcuve->cuve_id = $request->input('cuve');
+                $alimcuve->date = $request->input('date');
+                $alimcuve->fournisseur_id = $request->input('fournisseur');
+                $cuve->quantite_gasoil = ($cuve->quantite_gasoil) + ($alimcuve->quantite);
+                $alimcuve->save();
+                $cuve->save();
+                Alert::success('Operation Conclue', 'Succés');
+                return redirect('/Alimentation_Cuve/');
+
+            }
+        }
     }
 
     /**

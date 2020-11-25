@@ -19,23 +19,9 @@
             @endforeach
         </div>
         <div class="row ">
-            <div class="col-sm">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="optionSelect">Filtrer</label>
-                    </div>
-                    <select class="custom-select" id="optionSelect">
-                        <option value="1">Cuve</option>
-                        <option value="3">Fournisseur</option>
-                    </select>
-                    <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text"
-                           placeholder="Filtre">
-                </div>
-
-            </div>
             <form method="POST" action="/Alimentationcuvefilter">
                 @csrf
-                <div class="col">
+                <div class="col-sm">
                     <div class="input-group ">
 
                         <div class="input-group-prepend">
@@ -62,13 +48,13 @@
                         <div class="overflow-auto">
                             <table id="dTable" class="table table-bordered table-hover ">
                         <tr>
-                            <th onclick="sortTable(0)" scope="col">#</th>
-                            <th onclick="sortTable(1)" scope="col">Cuve</th>
-                            <th onclick="sortTable(2)" scope="col">Quantité Alimentée (L)</th>
-                            <th onclick="sortTable(3)" scope="col">Fournisseur</th>
-                            <th onclick="sortTable(4)" scope="col">Capacité Cuve</th>
-                            <th onclick="sortTable(5)" scope="col">Date et Heure</th>
-                            <th onclick="sortTable(6)" scope="col">Agent</th>
+                            <th>#</th>
+                            <th>Cuve</th>
+                            <th>Quantité Alimentée (L)</th>
+                            <th>Fournisseur</th>
+                            <th>Capacité Cuve</th>
+                            <th>Date et Heure</th>
+                            <th>Agent</th>
                             @if(Auth::user()->role== 'admin')
                                 <th>Action</th>
                             @endif
@@ -94,6 +80,8 @@
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm"><i
                                                     class="far fa-times-circle"></i></button>
+                                            <a class="btn btn-primary btn-sm" href="/Alimentation_Cuve/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
+
                                         </form>
 
                                     </td>
@@ -110,27 +98,4 @@
         </div>
     </div>
 @endsection
-<script>
-    function search() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue, option;
-        input = document.getElementById("searchinput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
-        option = document.getElementById("optionSelect");
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
 

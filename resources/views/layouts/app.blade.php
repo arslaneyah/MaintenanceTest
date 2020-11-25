@@ -25,6 +25,7 @@
             $("#dTable").DataTable({
                 "responsive": true,
                 "autoWidth": false,
+                "order": []
 
             })});
     </script>
@@ -248,7 +249,6 @@
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>
                                     Dashboard
-
                                 </p>
                             </a>
 
@@ -264,12 +264,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Gasoil" class="nav-link fils">
-
+                                    <i class="fas fa-clipboard-list"></i>
                                         <p>Suivie</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Gasoil/create" class="nav-link fils">
+
+                                        <i class="fas fa-plus-square"></i>
 
                                         <p>Ajouter</p>
                                     </a>
@@ -288,26 +290,28 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Cuve/" class="nav-link fils">
-
+                                        <i class="fas fa-list"></i>
                                         <p>Liste des Cuves</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Cuve/create" class="nav-link fils">
-
-                                        <p>Ajouter Cuve</p>
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Alimentation_Cuve" class="nav-link fils">
-
+                                        <i class="fas fa-clipboard-list"></i>
                                         <p>Suivie</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Alimentation_Cuve/create" class="nav-link fils">
 
-                                        <p>Alimenter Cuve</p>
+                                        <i class="fas fa-gas-pump"></i>
+
+                                        <p>Alimenter</p>
                                     </a>
                                 </li>
 
@@ -325,9 +329,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="/Kilometrage/" class="nav-link fils">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <p>Suivie</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/Kilometrage/create" class="nav-link fils">
-
-                                        <p>Reporter un kilometrage</p>
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter</p>
                                     </a>
                                 </li>
                             </ul>
@@ -344,46 +354,49 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Vehicule" class="nav-link fils">
-
+                                        <i class="fas fa-list"></i>
                                         <p>Liste Vehicules</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/Vehicule/create" class="nav-link fils">
+                                    <a href="/Modele" class="nav-link fils">
+                                        <i class="fas fa-list"></i>
 
+                                        <p>Liste Modeles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Marque" class="nav-link fils">
+                                        <i class="fas fa-list"></i>
+
+                                        <p>Liste Marques</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Modele/create" class="nav-link fils">
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter Modele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Vehicule/create" class="nav-link fils">
+                                        <i class="fas fa-plus-square"></i>
                                         <p>Ajouter Vehicule</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/createstatsvehicule" class="nav-link fils">
-
-                                        <p>Statistique Vehicule</p>
+                                    <a href="/Marque/create" class="nav-link fils">
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter Marque</p>
                                     </a>
                                 </li>
-                                    <li class="nav-item">
-                                        <a href="/Modele" class="nav-link fils">
+                                <li class="nav-item">
+                                    <a href="/createstatsvehicule" class="nav-link fils">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <p>Suivie Vehicule</p>
+                                    </a>
+                                </li>
 
-                                            <p>Liste Modeles</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/Modele/create" class="nav-link fils">
-
-                                            <p>Ajouter Modele</p>
-                                        </a>
-                                    </li>
-                                        <li class="nav-item">
-                                            <a href="/Marque" class="nav-link fils">
-
-                                                <p>Liste Marques</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/Marque/create" class="nav-link fils">
-
-                                                <p>Ajouter Marque</p>
-                                            </a>
-                                        </li>
                                 </li>
 
                                     </ul>
@@ -404,14 +417,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Fournisseur/" class="nav-link fils">
-
-                                        <p>Liste des Fournisseurs</p>
+                                        <i class="fas fa-list"></i>
+                                        <p>Liste</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Cuve/create" class="nav-link fils">
-
-                                        <p>Ajouter Fournisseur</p>
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter</p>
                                     </a>
                                 </li>
 
@@ -430,14 +443,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Unite/" class="nav-link fils">
-
-                                        <p>Liste des Unités</p>
+                                        <i class="fas fa-list"></i>
+                                        <p>Liste</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/Unite/create" class="nav-link fils">
-
-                                        <p>Ajouter Unite</p>
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter</p>
                                     </a>
                                 </li>
 
@@ -456,14 +469,14 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/User/" class="nav-link fils">
-
-                                        <p>Liste des Utilisateurs</p>
+                                        <i class="fas fa-list"></i>
+                                        <p>Liste</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/User/create" class="nav-link fils">
-
-                                        <p>Ajouter Utilisateur</p>
+                                        <i class="fas fa-plus-square"></i>
+                                        <p>Ajouter</p>
                                     </a>
                                 </li>
 
@@ -494,139 +507,16 @@
 
 </body>
 <script>
-    /*  $(document).ready(function(){
-          $(".pere").on('click',function() {
-              $(".pere").removeClass("active");
-              $(this).addClass("active");
-          });
-          $(".fils").on('click',function() {
-              $(".fils").removeClass("active");
-              $(this).addClass("active");
-          });
-      });*/
+
     // ------------------ Table to Excel Sheet---------------------
     $("#buttonexcel").on('click', function () {
         $("#tableP").table2excel({
             name: "w1",
-            filename: "suivie.xls", // do include extension
-            preserveColors: true // set to true if you want background colors and font colors preserved
+            filename: "suivie.xls",
+            preserveColors: true
         })
     });
     // ------------------ Table to Excel Sheet end---------------------
-
-
-    // ------------------ Table Filter---------------------
-   /* function search() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue, option;
-        input = document.getElementById("searchinput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
-        option = document.getElementById("optionSelect").value;
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[parseInt(option)];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }*/
-
-    /* --------------------------- Filter All--------------------------
-    $(document).ready(function(){
-      $("#searchinput1").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#tableP tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
-     --------------------------- Filter All End----------------------- */
-    // ------------------ Table Filter End---------------------
-    // ------------------ Table DATE Filter---------------------
-  /*  function searchdate() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue, option;
-        input = document.getElementById("searchinputdate");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
-        // option =  document.getElementById("optionSelect").value;
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[5];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }*/
-
-    // ------------------ Table DATE Filter End---------------------
-
-    // ------------------ Table Sort ---------------------------------
-
- /*   function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("tableP");
-        switching = true;
-
-        dir = "desc";
-
-        while (switching) {
-
-            switching = false;
-            rows = table.rows;
-
-            for (i = 1; i < (rows.length - 1); i++) {
-                // Start by saying there should be no switching:
-                shouldSwitch = false;
-
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Each time a switch is done, increase this count by 1:
-                switchcount++;
-            } else {
-
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
-        }
-    }*/
-
-    // ------------------ Table Sort End---------------------
-
 
 </script>
 

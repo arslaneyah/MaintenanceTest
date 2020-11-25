@@ -77,7 +77,9 @@ class ModeleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $modele=Modele::find($id);
+        $marques=Marque::all();
+        return view('Admin/vehicules/edit_modele')->with('modele',$modele)->with('marques',$marques);
     }
 
     /**
@@ -89,7 +91,12 @@ class ModeleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $modele=Modele::find($id);
+        $modele->modele=$request->input('modele');
+        $modele->marque_id=$request->input('marque');
+        $modele->save();
+        Alert::success('Modèle mis à jour','Modèle mis à jour avec succés');
+        return redirect('/Modele/');
     }
 
     /**

@@ -2,31 +2,14 @@
 <html>
 <body>
 @section('content')
-    <div class="container">
+    <div class="container mt-lg-5">
         <div class="row justify-content-center">
-            <div class="form-group">
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="optionSelect">Filtrer</label>
-                    </div>
-                    <select class="custom-select" id="optionSelect">
-                        <option value="1">n° park</option>
-                        <option value="2">Matricule</option>
-                        <option value="7">Unité</option>
-
-                    </select>
-                    <input class="form-control col-sm-12" id="searchinput" onkeyup="search()" type="text" placeholder="Filtre">
-                </div>
-
-            </div>
-            <div class="col-lg-10">
                 <div class="card elevation-3">
                     <div class="card-body">
                         <div class="overflow-auto">
                             <table id="dTable" class="table table-bordered table-hover ">
-                        <thead class="thead-dark">
-                        <tr>
+                                <thead class="thead-dark">
+                                <tr>
                             <th>#</th>
                             <th>n°park</th>
                             <th >n° chassis</th>
@@ -59,6 +42,7 @@
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
+                                        <a class="btn btn-primary btn-sm" href="/Vehicule/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
                                     </form>
 
                                 </td>
@@ -69,7 +53,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 @endsection

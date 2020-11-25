@@ -30,7 +30,6 @@
                                     <form method="post" action="/Marque/{{$item->id}}">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="hidden" value="{{$item->id}}">
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-times-circle"></i></button>
                                         <a class="btn btn-primary btn-sm" href="/Marque/{{$item->id}}/edit" role="button"><i class="far fa-edit"></i></a>
                                     </form>

@@ -86,7 +86,6 @@ class GasoilController extends Controller
 
     public function store(Request $request)
     {
-
         $user = Auth::user();
         $vehicule = Vehicule::where('id', $request->input('vehicule'))->first();
         $kilometrage = Kilometrage::where('vehicule_id', $vehicule->id)->orderby('date', 'desc')->first();
@@ -94,15 +93,14 @@ class GasoilController extends Controller
         if (!Gasoil::All()->contains('n_bon', $request->input('n_bon'))) {
             if ($request->input('type') == 1) {
                 $cuve = Cuve::where('id', $request->input('cuve'))->first();
-                if ($request->input("gasoil") > ($cuve->quantite_gasoil)) {
-                    Alert::error('Erreur Quantite Gasoil ', 'Echec : Quantite Gasoil Insuffisante');
+                if (!is_null($kilometrage)) {
+                    if ($request->input("gasoil") > ($cuve->quantite_gasoil)) {
+                        Alert::error('Erreur Quantite Gasoil ', 'Echec : Quantite Gasoil Insuffisante');
 
-                } else {
-                    if (is_null($kilometrage) == false) {
+                    } else {
 
                         if (($request->input("km") < ($kilometrage->dernier_km)) && ($request->input("date") >= $kilometrage->date)) {
                             Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
-
                         } else {
                             $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($request->input('gasoil'));
                             $km = new Kilometrage();
@@ -120,37 +118,43 @@ class GasoilController extends Controller
                             $cuve->save();
                             $gasoil->save();
                             Alert::success('Operation Conclue', 'Succés');
-
                         }
+                    }
+                } else{
+                    $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($request->input('gasoil'));
+                    $km = new Kilometrage();
+                    $km->dernier_km = $request->input('km');
+                    $km->date = $request->input('date');
+                    $km->user_id = $user->id;
+                    $km->vehicule_id = $vehicule->id;
+                    $km->save();
+                    $gasoil->kilometrage_id = $km->id;
+                    $gasoil->litres = $request->input('gasoil');
+                    $gasoil->fournisseur_id = $request->input('fournisseur');
+                    $gasoil->cuve_id = $cuve->id;
+                    $gasoil->type = $request->input('type');
+                    $gasoil->n_bon = $request->input('n_bon');
+                    $cuve->save();
+                    $gasoil->save();
+                    Alert::success('Operation Conclue', 'Succés');
+                }
 
+            }
+            else {
+                $fournisseur = Fournisseur::where('id', $request->input('fournisseur'))->first();
+                if (!is_null($kilometrage)) {
+                    if ($request->input("km") < ($kilometrage->dernier_km) && ($request->input("date") >= $kilometrage->date)) {
+                        Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
 
                     } else {
-                        $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($request->input('gasoil'));
                         $km = new Kilometrage();
                         $km->dernier_km = $request->input('km');
                         $km->date = $request->input('date');
                         $km->user_id = $user->id;
                         $km->vehicule_id = $vehicule->id;
                         $km->save();
+                        $litres = 850 / ($fournisseur->prix);
                         $gasoil->kilometrage_id = $km->id;
-                        $gasoil->litres = $request->input('gasoil');
-                        $gasoil->fournisseur_id = $request->input('fournisseur');
-                        $gasoil->cuve_id = $cuve->id;
-                        $gasoil->type = $request->input('type');
-                        $gasoil->n_bon = $request->input('n_bon');
-                        $cuve->save();
-                        $gasoil->save();
-                        Alert::success('Operation Conclue', 'Succés');
-                    }
-                }
-
-            } else {
-                $fournisseur = Fournisseur::where('id', $request->input('fournisseur'))->first();
-                if (is_null($kilometrage) == false) {
-
-                    if ($request->input("km") == ($kilometrage->dernier_km)) {
-                        $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                        $gasoil->kilometrage_id = $vehicule->kilometrage_id;
                         $gasoil->litres = $litres;
                         $gasoil->fournisseur_id = $request->input('fournisseur');
                         $gasoil->cuve_id = $request->input('cuve');
@@ -159,39 +163,16 @@ class GasoilController extends Controller
                         $gasoil->save();
                         Alert::success('Operation Conclue', 'Succés');
 
-                    } else {
-                        if ($request->input("km") < ($kilometrage->dernier_km)) {
-                            Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
-
-                        } else {
-                            $km = new Kilometrage();
-                            $km->dernier_km = $request->input('km');
-                            $km->date = $request->input('date');
-                            $km->user_id = $user->id;
-                            $km->vehicule_id = $vehicule->id;
-                            $km->save();
-                            $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                            $gasoil->kilometrage_id = $km->id;
-                            $gasoil->litres = $litres;
-                            $gasoil->fournisseur_id = $request->input('fournisseur');
-                            $gasoil->cuve_id = $request->input('cuve');
-                            $gasoil->type = $request->input('type');
-                            $gasoil->n_bon = $request->input('n_bon');
-                            $gasoil->save();
-                            Alert::success('Operation Conclue', 'Succés');
-
-                        }
                     }
-
-                } else {
+                }else{
                     $km = new Kilometrage();
                     $km->dernier_km = $request->input('km');
                     $km->date = $request->input('date');
                     $km->user_id = $user->id;
                     $km->vehicule_id = $vehicule->id;
                     $km->save();
-                    $litres = (($request->input('gasoil')) * 850) / ($fournisseur->prix);
-                    $gasoil->kilometrage_id = $km->id;;
+                    $litres = 850 / ($fournisseur->prix);
+                    $gasoil->kilometrage_id = $km->id;
                     $gasoil->litres = $litres;
                     $gasoil->fournisseur_id = $request->input('fournisseur');
                     $gasoil->cuve_id = $request->input('cuve');
@@ -200,14 +181,13 @@ class GasoilController extends Controller
                     $gasoil->save();
                     Alert::success('Operation Conclue', 'Succés');
                 }
-            }
 
-
-            return redirect('/Gasoil/create');
-        } else {
-            Alert::error('Bon Existant', 'Echec : Vous avez introduit un numéro de bon existant');
-            return redirect('/Gasoil/create');
         }
+        }else {
+            Alert::error('Bon Existant', 'Echec : Vous avez introduit un numéro de bon existant');
+        }
+        return redirect('/Gasoil/create');
+
     }
 
     /**
@@ -229,7 +209,13 @@ class GasoilController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gasoil=Gasoil::find($id);
+        $cuves = Cuve::All();
+        $cuves = $cuves->except(99);
+
+$fournisseur = Fournisseur::where('etat', 1)->get();
+$vehicules = Vehicule::All()->sortBy('n_park');
+return view('Gasoil/edit')->with('vehicules', $vehicules)->with('fournisseurs', $fournisseur)->with('cuves', $cuves)->with('gasoil', $gasoil);
     }
 
     /**
@@ -241,8 +227,74 @@ class GasoilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        $vehicule = Vehicule::where('id', $request->input('vehicule'))->first();
+        $kilometrage = Kilometrage::where('vehicule_id', $vehicule->id)->orderby('date', 'desc')->first();
+        $gasoil = Gasoil::find($id);
+        $km=$gasoil->kilometrage ;
+        if (!Gasoil::All()->except($gasoil->id)->contains('n_bon', $request->input('n_bon'))) {
+            if ($request->input('type') == 1) {
+                $cuve = Cuve::find($request->input('cuve'));
+                $cuve0= Cuve::find($gasoil->cuve_id);
+                $cuve0->quantite_gasoil = ($cuve->quantite_gasoil) + $gasoil->litres;
+
+                if ($request->input("gasoil") > ($cuve->quantite_gasoil)) {
+                    Alert::error('Erreur Quantite Gasoil ', 'Echec : Quantite Gasoil Insuffisante');
+
+                } else {
+
+                    if (($request->input("km") < ($kilometrage->dernier_km)) && ($request->input("date") >= $kilometrage->date)) {
+                        Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
+                    } else {
+                        $cuve->quantite_gasoil = ($cuve->quantite_gasoil) - ($request->input('gasoil'));
+                        $km->dernier_km = $request->input('km');
+                        $km->date = $request->input('date');
+                        $km->user_id = $user->id;
+                        $km->vehicule_id = $vehicule->id;
+                        $km->save();
+                        $gasoil->kilometrage_id = $km->id;
+                        $gasoil->litres = $request->input('gasoil');
+                        $gasoil->fournisseur_id = $request->input('fournisseur');
+                        $gasoil->cuve_id = $cuve->id;
+                        $gasoil->type = $request->input('type');
+                        $gasoil->n_bon = $request->input('n_bon');
+                        $cuve0->save();
+                        $cuve->save();
+                        $gasoil->save();
+                        Alert::success('Operation Conclue', 'Succés');
+                    }
+                }
+
+            } else {
+                $fournisseur = Fournisseur::where('id', $request->input('fournisseur'))->first();
+                if ($request->input("km") < ($kilometrage->dernier_km)  && ($request->input("date") >= $kilometrage->date)) {
+                    Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
+
+                } else {
+                    $km->dernier_km = $request->input('km');
+                    $km->date = $request->input('date');
+                    $km->user_id = $user->id;
+                    $km->vehicule_id = $vehicule->id;
+                    $km->save();
+                    $litres = 850 / ($fournisseur->prix);
+                    $gasoil->kilometrage_id = $km->id;
+                    $gasoil->litres = $litres;
+                    $gasoil->fournisseur_id = $request->input('fournisseur');
+                    $gasoil->cuve_id = $request->input('cuve');
+                    $gasoil->type = $request->input('type');
+                    $gasoil->n_bon = $request->input('n_bon');
+                    $gasoil->save();
+                    Alert::success('Operation Conclue', 'Succés');
+
+                }
+            }
+            return redirect('/Gasoil/');
+        } else {
+            Alert::error('Bon Existant', 'Echec : Vous avez introduit un numéro de bon existant');
+            return redirect('/Gasoil/'.$id.'/edit');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -253,9 +305,12 @@ class GasoilController extends Controller
     public function destroy($id)
     {
         $gasoil = Gasoil::find($id);
-        $cuve = $gasoil->cuve;
-        $cuve->quantite_gasoil = $cuve->quantite_gasoil + $gasoil->quantite;
-        $cuve->save();
+        if($gasoil->type==1) {
+            $cuve = $gasoil->cuve;
+            $cuve->quantite_gasoil = $cuve->quantite_gasoil + $gasoil->litres;
+            $cuve->save();
+        }
+        Kilometrage::destroy($gasoil->kilometrage->id);
         Gasoil::destroy($id);
         Alert::success('Operation Conclue', 'Succés');
         return redirect('/Gasoil/');

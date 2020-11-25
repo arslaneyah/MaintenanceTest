@@ -86,9 +86,9 @@
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="gasoil">nombre de bons</label>
-                                    <input type="number" class="form-control" id="gasoil" name="gasoil"
-                                           placeholder="gasoil" required>
+                                    <label for="gasoil">numero de bon</label>
+                                    <input type="number" class="form-control" id="n_bon" name="n_bon"
+                                           placeholder="n° Bon" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="date">Date</label>
@@ -122,23 +122,7 @@
                             </form>
                         </div>
 
-                  <!--      <div id="gasoilexcelform" class="card-body container tab-pane fade">
-                            <form method="POST" action="{{ route ('excelimport')}}" enctype="multipart/form-data">
-                                @csrf
 
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="file" required>
-                                            <label class="custom-file-label">Telecharger un Fichier</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="submit">Importer</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div> -->
                     </div>
 
                 </div>

@@ -21,10 +21,12 @@ class KilometrageController extends Controller
     public function __construct(){
 
         $this->middleware('Writer',['only' => ['create','store']]);
+        $this->middleware('Admin',['only' => ['edit','update','destroy']]);
     }
     public function index()
     {
-
+        $kilometrages=Kilometrage::all()->sortBy('date',SORT_DESC,true);
+        return view('Kilometrage/index')->with('kilometrages',$kilometrages);
     }
 
     /**
@@ -47,14 +49,15 @@ class KilometrageController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $kilometrage = Kilometrage::where('vehicule_id', $request->input('vehicule'))->first();
+        $kilometrage = Kilometrage::where('vehicule_id', $request->input('vehicule'))->where('date','<',$request->input('date'))->get();
+        $kilometrage=$kilometrage->reverse()->first();
         if (is_null($kilometrage)==false) {
             if ($request->input("km") == ($kilometrage->dernier_km)) {
                 Alert::error('Kilometrage Erroné ', 'Echec : kilometrage deja introduit');
                 return redirect('Kilometrage/create');
 
             } else {
-                if ($request->input("km") < ($kilometrage->dernier_km)) {
+                if ($request->input("km") < ($kilometrage->dernier_km) && $request->input('date') >= $kilometrage->date ) {
                     Alert::error('Kilometrage Erroné ', 'Echec : Vous avez introduit un kilométrage inférieur au dernier kilométrage');
                     return redirect('Kilometrage/create');
 
@@ -101,7 +104,9 @@ class KilometrageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kilometrage=Kilometrage::find($id);
+        $vehicules = Vehicule::All()->sortBy('n_park');
+        return view('Kilometrage/edit')->with('vehicules', $vehicules)->with('kilometrage', $kilometrage);
     }
 
     /**
@@ -113,8 +118,24 @@ class KilometrageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+
+        $user = Auth::user();
+        $km=Kilometrage::find($id);
+
+                    $km->dernier_km = $request->input('km');
+                    $km->date = $request->input('date');
+                    $km->user_id = $user->id;
+                    $km->vehicule_id = $request->input('vehicule');
+                    $km->save();
+                    Alert::success('Opération Conclue', 'Kilometrage mis a jour avec succés');
+                    return redirect('Kilometrage/');
+
+                }
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
