@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : Dim 22 nov. 2020 à 13:25
+-- Généré le : mer. 25 nov. 2020 à 10:35
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.1
 
@@ -67,10 +67,10 @@ CREATE TABLE `cuves` (
 --
 
 INSERT INTO `cuves` (`id`, `nom`, `capacite`, `unite_id`, `quantite_gasoil`, `created_at`, `updated_at`) VALUES
-(1, 'Cuve Setif', 46000.00, 33, 0.00, NULL, '2020-11-19 11:56:10'),
+(1, 'Cuve Setif', 46000.00, 33, 850.00, NULL, '2020-11-24 13:12:18'),
 (2, 'Cuve Biskra', 30000.00, 3307, 0.00, NULL, '2020-09-07 13:17:22'),
 (3, 'Cuve Skikda', 60000.00, 37, 0.00, NULL, '2020-10-12 06:45:27'),
-(4, 'Cuve DG Constantine', 8000.00, 30, 2050.00, NULL, '2020-11-22 09:58:20'),
+(4, 'Cuve DG Constantine', 8000.00, 30, 1665.00, NULL, '2020-11-24 10:00:51'),
 (99, 'Autre', 999999.99, 30, 999999.99, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -202,7 +202,16 @@ INSERT INTO `gasoils` (`id`, `kilometrage_id`, `litres`, `fournisseur_id`, `crea
 (69, 64, 54.00, 2, '2020-11-22 09:55:03', '2020-11-22 09:55:03', 4, 1, 4899),
 (70, 65, 41.00, 2, '2020-11-22 09:55:52', '2020-11-22 09:55:52', 4, 1, 4900),
 (71, 66, 40.00, 2, '2020-11-22 09:57:15', '2020-11-22 09:57:15', 4, 1, 4901),
-(72, 67, 68.00, 2, '2020-11-22 09:58:20', '2020-11-22 09:58:20', 4, 1, 4902);
+(72, 67, 68.00, 2, '2020-11-22 09:58:20', '2020-11-22 09:58:20', 4, 1, 4902),
+(73, 68, 66.00, 2, '2020-11-23 07:40:52', '2020-11-23 07:40:52', 4, 1, 4903),
+(74, 69, 47.00, 2, '2020-11-23 07:41:58', '2020-11-23 07:41:58', 4, 1, 4904),
+(75, 70, 40.00, 2, '2020-11-23 07:43:24', '2020-11-23 07:43:24', 4, 1, 4905),
+(76, 71, 55.00, 2, '2020-11-23 07:54:40', '2020-11-23 07:54:40', 4, 1, 4906),
+(77, 72, 62.00, 2, '2020-11-23 07:55:42', '2020-11-23 07:55:42', 4, 1, 4907),
+(78, 73, 39.00, 2, '2020-11-23 07:56:23', '2020-11-23 07:56:23', 4, 1, 4908),
+(79, 74, 33.00, 2, '2020-11-23 09:40:04', '2020-11-23 09:40:04', 4, 1, 4909),
+(80, 80, 36.00, 2, '2020-11-24 08:50:28', '2020-11-24 08:50:28', 4, 1, 4910),
+(81, 81, 58.00, 2, '2020-11-24 08:52:31', '2020-11-24 08:52:31', 4, 1, 4911);
 
 -- --------------------------------------------------------
 
@@ -289,7 +298,16 @@ INSERT INTO `kilometrages` (`id`, `created_at`, `updated_at`, `date`, `dernier_k
 (64, '2020-11-22 09:55:03', '2020-11-22 09:55:03', '2020-11-20 15:30:00', 292925, 5, 88),
 (65, '2020-11-22 09:55:52', '2020-11-22 09:55:52', '2020-11-20 17:20:00', 368413, 5, 132),
 (66, '2020-11-22 09:57:14', '2020-11-22 09:57:14', '2020-11-21 17:35:00', 383839, 5, 131),
-(67, '2020-11-22 09:58:20', '2020-11-22 09:58:20', '2020-11-21 18:50:00', 260548, 5, 94);
+(67, '2020-11-22 09:58:20', '2020-11-22 09:58:20', '2020-11-21 18:50:00', 260548, 5, 94),
+(68, '2020-11-23 07:40:52', '2020-11-23 07:40:52', '2020-11-22 16:10:00', 233969, 5, 90),
+(69, '2020-11-23 07:41:57', '2020-11-23 07:41:57', '2020-11-22 16:25:00', 38539, 5, 58),
+(70, '2020-11-23 07:43:24', '2020-11-23 07:43:24', '2020-11-22 16:30:00', 24836, 5, 52),
+(71, '2020-11-23 07:54:40', '2020-11-23 07:54:40', '2020-11-22 18:30:00', 268897, 5, 93),
+(72, '2020-11-23 07:55:42', '2020-11-23 07:55:42', '2020-11-22 18:45:00', 228809, 5, 89),
+(73, '2020-11-23 07:56:23', '2020-11-23 07:56:23', '2020-11-23 09:10:00', 172594, 5, 134),
+(74, '2020-11-23 09:40:04', '2020-11-23 09:40:04', '2020-11-23 10:30:00', 544419, 5, 47),
+(80, '2020-11-24 08:50:28', '2020-11-24 08:50:28', '2020-11-23 13:10:00', 369065, 5, 132),
+(81, '2020-11-24 08:52:31', '2020-11-24 08:52:31', '2020-11-23 16:00:00', 293459, 5, 88);
 
 -- --------------------------------------------------------
 
@@ -318,8 +336,7 @@ INSERT INTO `marques` (`id`, `nom`, `user_id`, `created_at`, `updated_at`) VALUE
 (6, 'Vanhool', 1, NULL, NULL),
 (9, 'Renault', 1, '2020-11-03 08:58:53', '2020-11-03 08:58:53'),
 (10, 'Citroen', 1, '2020-11-03 08:59:08', '2020-11-03 08:59:08'),
-(11, 'Skoda', 1, '2020-11-03 08:59:19', '2020-11-03 08:59:19'),
-(13, 'Buggati', 1, '2020-11-22 11:01:15', '2020-11-22 11:01:15');
+(11, 'Skoda', 1, '2020-11-03 08:59:19', '2020-11-03 08:59:19');
 
 -- --------------------------------------------------------
 
@@ -483,7 +500,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (2, 'Agent Setif', 'agentsetif@mail.com', NULL, '$2y$10$DjuIGXMhmZvIt8utyvUsm.ivMSvHX2QMWZqN652qA3UgVFtE9vFxO', NULL, NULL, NULL, 1, 'agent', 33, 1),
 (3, 'esma', 'esma@mail.com', NULL, '$2y$10$xTH2.b30bBBx8pqr4gjCGOBp26B07NxMGq/ZTC5fOGeEAo3TWrhBy', NULL, '2020-10-07 08:39:14', '2020-10-07 08:39:14', 1, 'supervisor', 30, 1),
 (4, 'kamel', 'kamel@mail.com', NULL, '$2y$10$c4JanluC06Fjl.hjpSWRCu45eupQeYk.mIEfaGxjYPrpP9o5TW7iO', NULL, '2020-10-07 08:41:09', '2020-10-07 08:41:09', 1, 'admin', 30, 1),
-(5, 'Agent Constantine', 'dcmm_tve@yahoo.fr', NULL, '$2y$10$3JjB2BTnwtsihL8wFChcvOYQjrlOl4rhPnKtLZUxkaPoiYj4XfXXW', 'd5duXKQDyDrexaKuWtT36r0O4b63ZUKyuy4q7N15Q1jrFkjtxSvtboPEzgCP', '2020-10-27 07:28:48', '2020-10-27 07:28:48', 1, 'agent', 30, 1);
+(5, 'Agent Constantine', 'dcmm_tve@yahoo.fr', NULL, '$2y$10$3JjB2BTnwtsihL8wFChcvOYQjrlOl4rhPnKtLZUxkaPoiYj4XfXXW', 'LkcJhbZRYzUugISMsDYFlATUte1j2OISKtSpP4rwkQ658YsRYEkew0gfLnbD', '2020-10-27 07:28:48', '2020-10-27 07:28:48', 1, 'agent', 30, 1);
 
 -- --------------------------------------------------------
 
@@ -642,7 +659,8 @@ INSERT INTO `vehicules` (`id`, `n_park`, `n_chassis`, `matricule`, `modele_id`, 
 (131, '13729-112-25', 'VF1BZAK0647720901', '13729-112-25', 15, 30, 2012, '2020-11-03 09:21:34', '2020-11-03 09:21:34', 1),
 (132, '08548-115-25', 'VF7DD9HJCFJ596694', '08548-115-25', 18, 30, 2015, '2020-11-03 09:29:02', '2020-11-03 09:29:02', 1),
 (133, '192188-00-16', 'KMHCT441BAHU181636', '192188-00-16', 19, 30, 2015, '2020-11-03 09:39:10', '2020-11-03 09:39:10', 1),
-(134, '02892-114-21', 'VF7GJWJYBDX507246', '02892-114-21', 17, 30, 2015, '2020-11-03 09:40:28', '2020-11-03 09:40:28', 1);
+(134, '02892-114-21', 'VF7GJWJYBDX507246', '02892-114-21', 17, 30, 2015, '2020-11-03 09:40:28', '2020-11-03 09:40:28', 1),
+(135, 'PDG', '56658-00-48', '56658-00-48', 16, 30, 2020, '2020-11-23 09:24:56', '2020-11-23 09:33:16', 1);
 
 -- --------------------------------------------------------
 
@@ -826,7 +844,7 @@ ALTER TABLE `wilayas`
 -- AUTO_INCREMENT pour la table `alimentation_cuves`
 --
 ALTER TABLE `alimentation_cuves`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `cuves`
@@ -850,13 +868,13 @@ ALTER TABLE `fournisseurs`
 -- AUTO_INCREMENT pour la table `gasoils`
 --
 ALTER TABLE `gasoils`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT pour la table `kilometrages`
 --
 ALTER TABLE `kilometrages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT pour la table `marques`
@@ -874,7 +892,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT pour la table `modeles`
 --
 ALTER TABLE `modeles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `unites`
@@ -892,7 +910,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT pour la table `wilayas`
